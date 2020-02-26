@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\StudentAffairs\AcademicYear;
+use App\DataTables\AcademicYearDataTable;
 
 class AcademicYearController extends Controller 
 {
@@ -14,10 +15,12 @@ class AcademicYearController extends Controller
    *
    * @return Response
    */
-  public function index()
+  public function index(AcademicYearDataTable $dataTable)
   {
-      $records = AcademicYear::paginate(10);
-      return view('studentAffairs\academicyear\all', compact('records'));
+    return $dataTable->render('studentAffairs\academicyear\all');
+
+      // $records = AcademicYear::paginate(10);
+      // return view('studentAffairs\academicyear\all', compact('records'));
   }
 
   /**

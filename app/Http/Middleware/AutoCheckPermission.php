@@ -20,7 +20,7 @@ class AutoCheckPermission
     {
         $routeName = $request->route()->getName();
 
-        $permission = Permission::whereRaw("FIND_IN_SET ('$routeName', routes)")->first();
+        $permission = Permission::whereRaw("FIND_IN_SET ('$routeName', route)")->first();
         if ($permission) {
             if (!$request->user()->can($permission->name)) {
                 abort(403);

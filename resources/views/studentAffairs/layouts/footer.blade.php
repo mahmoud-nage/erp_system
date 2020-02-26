@@ -79,6 +79,12 @@ swalWithBootstrapButtons.fire({
 
 
 {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
 <script src="{{ asset('../vendor/yajra/laravel-datatables-buttons/src/resources/assets/buttons.server-side.js') }}"></script>
 @stack('scripts')
  <!-- Start Our scripts-->

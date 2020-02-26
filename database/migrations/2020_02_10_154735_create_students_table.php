@@ -17,7 +17,7 @@ class CreateStudentsTable extends Migration {
 			$table->string('student_code')->nullable()->unique();
 			$table->date('dob');
 			$table->string('phone')->unique();
-			$table->integer('parent_id')->unsigned();
+			$table->integer('parentt_id')->unsigned();
 			$table->string('image')->nullable();
 			$table->string('national_id')->unique();
 			$table->tinyInteger('religion');

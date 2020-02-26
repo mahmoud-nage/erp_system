@@ -22,7 +22,12 @@ class AdminController extends Controller
   public function index(AdminsDataTable $dataTable)
   {
       return $dataTable->render('studentAffairs\admin\all');
-      // $records = Admin::paginate(10);
+
+
+
+      // $records = Admin::find(1);
+      // $records->permissions;
+      // dd( $records->permissions);
       // return view('studentAffairs\admin\all', compact('records'));
   }
 
@@ -50,10 +55,12 @@ class AdminController extends Controller
         'email' => 'required|email|unique:admins',
         'password' => 'required',
         'permission_list' => 'array',
+        'role_list' => 'array',
     ]);
     $request->merge(['password' => Hash::make($request->input('password'))]);
     $record = Admin::create($request->except('permission_list'));
     $record->givePermissionTo($request->input('permission_list'));
+    $record->assignRole($request->input('role_list'));
     return redirect(route('admins.index'))->with('success', __('lang.inserted'));
   }
 

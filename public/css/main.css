@@ -22,3 +22,10 @@ input[type=submit] {
 .table td {
     vertical-align: middle !important;
 }
+
+
+/* //datatable */
+
+input .f_search {
+    width: 100px;
+}

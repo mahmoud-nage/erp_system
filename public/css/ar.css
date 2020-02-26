@@ -119,3 +119,23 @@ select {
         left: 0px;
     }
 }
+
+
+/* // datatable */
+
+#data-table {
+    direction: rtl;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: left;
+}
+
+.dt-buttons {
+    direction: rtl;
+    float: right;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    text-align: right;
+}

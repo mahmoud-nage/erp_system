@@ -88,9 +88,9 @@ class Student extends Model
         return $this->hasMany('App\StudentAffairs\Image')->withPivot('student_code');
     }
     
-    public function parents()
+    public function parent()
     {
-        return $this->belongsTo('App\StudentAffairs\Parentt', 'parent_id');
+        return $this->belongsTo('App\StudentAffairs\Parentt', 'parentt_id');
     }
 
 }

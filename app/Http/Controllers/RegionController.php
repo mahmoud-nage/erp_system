@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\StudentAffairs\Region;
+use App\DataTables\RegionDataTable;
 
 class RegionController extends Controller 
 {
@@ -13,10 +14,12 @@ class RegionController extends Controller
    *
    * @return Response
    */
-  public function index()
+  public function index(RegionDataTable $dataTable)
   {
-      $records = Region::paginate(10);
-      return view('studentAffairs\region\all', compact('records'));
+    return $dataTable->render('studentAffairs\region\all');
+
+      // $records = Region::paginate(10);
+      // return view('studentAffairs\region\all', compact('records'));
   }
 
   /**

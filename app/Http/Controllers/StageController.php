@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\SuperAdmin;
 use Illuminate\Http\Request;
 use App\StudentAffairs\Stage;
+use App\DataTables\StageDataTable;
 
 class StageController extends Controller 
 {
@@ -13,10 +14,12 @@ class StageController extends Controller
    *
    * @return Response
    */
-  public function index()
+  public function index(StageDataTable $dataTable)
   {
-      $records = Stage::paginate(10);
-      return view('studentAffairs\stage\all', compact('records'));
+      // $records = Stage::paginate(10);
+      // return view('studentAffairs\stage\all', compact('records'));
+      return $dataTable->render('studentAffairs\stage\all');
+
   }
 
   /**

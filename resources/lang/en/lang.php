@@ -10,6 +10,11 @@ return [
     'updated' => "Updated Successfuly",
 
     // buttom
+    'print' => 'Print',
+    'create' => 'Create',
+    'excel' => 'Excel',
+    'reload' => 'Reload',
+    'pdf' => 'PDF',
     'submit' => 'Submit',
     'edit' => 'Edit',
     'reset' => 'Reset',
@@ -93,6 +98,7 @@ return [
         // general
         'name_en' => 'English Name',
         'name_ar' => 'Arabic Name',
+        'name' => 'Name',
         'email' => 'E mail',
         'password' => 'Password',
 
@@ -159,7 +165,6 @@ return [
 
         'select_image_type' => 'Selcet Image Type',
         'profile' => 'Profile',
-        'pdf' => 'PDF',
 
         'select_status' => 'Select Status',
         'life' => 'Life',

@@ -47,15 +47,15 @@
                 
                   <div class="col-lg-6 col-md-12">
                     <div class="form-group @if(app()->getLocale() == 'ar') text-right @endif">
-                    <h5>{{__('lang.name_en')}}<span class="required" style="color:red">*</span></h5>
+                    <h5>{{__('lang.name')}}<span class="required" style="color:red">*</span></h5>
                       <div class="controls">
-                        <input value="{{$record->name_en}}" type="text" name="name_en" class="form-control @error('name_en') is-invalid @enderror " required data-validation-required-message="This field is required">
+                        <input value="{{$record->name}}" type="text" name="name" class="form-control @error('name') is-invalid @enderror " required data-validation-required-message="This field is required">
                         @if(session('danger'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{session('danger')}}</strong>
                         </span>
                         @endif
-                        @error('name_en')
+                        @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -84,6 +84,21 @@
                       </div>
                       </div>
                       @endif
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <h5>{{__('lang.route')}}<span class="required" style="color:red">*</span></h5>
+                      <div class="controls mb-1">
+                      <input value="{{$record->route}}" type="text" name="route" class="form-control @error('route') is-invalid @enderror " required data-validation-required-message="This field is required">
+                      @error('route')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                      @enderror
+                    </div>
+                    </div>
                   </div>
                 </div>
                 <div class="row">

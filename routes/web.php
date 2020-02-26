@@ -19,6 +19,9 @@ Route::any('/logins', 'AdminController@login');
 
 // multi language [ar,en]
 Route::get('lang/{lang}', function ($lang) {
+    if(session()->has('lang')){
+        session()->forget('lang');
+    }
     session()->put('lang',$lang);
     return back();
 })->name('lang');
@@ -52,7 +55,12 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::resource('permission', 'PermissionController');
 
+    Route::resource('parent', 'parenttController');
+
+
 });
+
+
 
 
 

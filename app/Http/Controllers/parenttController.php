@@ -12,8 +12,19 @@ class parenttController extends Controller
    *
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
+
+    if($request->has('parent_phone')){
+      $name = Parentt::where('parent_phone', $request->parent_phone)->first();
+      if($name) $parent_name  = $name['parent_name_'.app()->getLocale()];
+      else 
+      $parent_name  = 'Not Found';
+      
+            return ResponseJson(1, $parent_name);
+
+
+    }
       // return $dataTable->render('studentAffairs\admin\all');
       $records = Parentt::paginate(10);
       return view('studentAffairs\student\all', compact('records'));

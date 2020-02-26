@@ -5,6 +5,24 @@
 @endsection
 
 @section('content')
+
+<div class="card">
+    <div class="card-header">
+        <h1 >{{__('lang.ac_years')}}</h1><br>
+    </div><!-- /.card-header -->
+    <div class="card-body">
+        <div>
+            <div class="row">
+                <div class="col-sm-12">
+                    {!! $dataTable->table([], true) !!}
+                </div></div></div></div></div>
+@endsection
+
+@push('scripts')
+    {{$dataTable->scripts()}}
+@endpush
+
+{{-- @section('content')
     @if(!empty($records))
     <div class="card">
         <div class="card-header">
@@ -35,7 +53,7 @@
                                     {{__('lang.order')}}
                                 </th> --}}
                             
-                                <th class="text-center" style="width:50px">
+                                {{-- <th class="text-center" style="width:50px">
                                     {{__('lang.actions')}}
                                 </th>
                             </tr>
@@ -56,7 +74,7 @@
 
                                             {{-- <td class="text-center">{{$record->order}}</td>     --}}
 
-                                            <td class="text-center" >
+                                            {{-- <td class="text-center" >
                                                 <a class="btn btn-info btn-group-vertical" href="{{route('academicyear.edit', $record->id)}}">
                                                     <i class="fas fa-user-edit"></i>
                                                 </a>
@@ -86,4 +104,4 @@
         whoops! : You don`t have Data.
     </div>
     @endif
-@endsection
+@endsection --}} --}} --}}

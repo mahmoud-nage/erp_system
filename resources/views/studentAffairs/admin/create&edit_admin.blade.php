@@ -1,4 +1,3 @@
-  
 @inject('role', "Spatie\Permission\Models\Role")
 @inject('permission', "Spatie\Permission\Models\Permission")
 
@@ -112,31 +111,62 @@
                       @enderror
                     </div>
                   </div>
-
-<div class="col-md-12 col-lg-6">
+                </div>
+              </div>
+                <div class="row">
   <div class="form-group">
-    <h5>{{__('lang.password')}}<span class="required" style="color:red">*</span></h5>
+    <h5>{{__('lang.permission')}}<span class="required" style="color:red">*</span></h5>
     <div class="controls mb-1">
       @foreach($permission->all() as $p)
-      <div class="col-md-3">
+      <div class="col-md-3 col-lg-3">
           <div class="checkbox">
               <label>
-                  <input type="checkbox" id="permission_list" value="{{$p->id}}" name="permission_list[]"
+                <div class="col-1">  <input type="checkbox" id="permission_list" value="{{$p->id}}" name="permission_list[]"
                          @if($record->hasPermissionTo($p->name))
                          checked
                       @endif
-                  >
+                  ></div>
                   {{$p->name}}
               </label>
           </div>
       </div>
   @endforeach
-    </div>
   </div>
 </div>
 
 
                 </div>
+
+
+
+                <div class="row">
+                  <div class="col-md-12 col-md-6">
+
+                  <div class="form-group">
+                    <h5>{{__('lang.permission')}}<span class="required" style="color:red">*</span></h5>
+                    <div class="controls mb-1">
+                      @foreach($role->all() as $r)
+                      <div class="col-md-3 col-lg-3">
+                          <div class="checkbox">
+                              <label>
+                                <div class="col-1">  <input type="checkbox" id="role_list" value="{{$r->id}}" name="role_list[]"
+                                         @if($record->hasRole($r->name))
+                                         checked
+                                      @endif
+                                  ></div>
+                                  {{$r->name}}
+                              </label>
+                          </div>
+                      </div>
+                  @endforeach
+                  </div>
+                </div>
+
+                </div>
+              </div>
+
+                
+                <div class="row">
 
                   <div class="col-lg-12 col-md-12">
                     <div class="form-group @if(app()->getLocale() == 'ar') text-right @endif">
@@ -149,12 +179,6 @@
                       <button type="reset" class="btn btn-danger">{{__('lang.reset')}} <i class="fa fa-refresh position-right"></i></button>
                     </div>
                   </div>
-
-{{-- end left side --}}
-                <div class="col-lg-5 col-md-12">
-                  
-                
-                </div>
               </div>
             </form>
           </div>

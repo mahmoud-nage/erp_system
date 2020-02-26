@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\StudentAffairs\Nationality;
+use App\DataTables\NationalityDataTable;
 
 class NationalityController extends Controller 
 {
@@ -13,10 +14,12 @@ class NationalityController extends Controller
    *
    * @return Response
    */
-  public function index()
+  public function index(NationalityDataTable $dataTable)
   {
-      $records = Nationality::paginate(10);
-      return view('studentAffairs\nationality\all', compact('records'));
+    return $dataTable->render('studentAffairs\nationality\all');
+
+      // $records = Nationality::paginate(10);
+      // return view('studentAffairs\nationality\all', compact('records'));
   }
 
   /**

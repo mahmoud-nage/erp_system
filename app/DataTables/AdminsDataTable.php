@@ -21,7 +21,9 @@ class AdminsDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'admins.action');
+            ->addIndexColumn()
+
+            ->addColumn('action', 'studentAffairs.admin.action');
     }
 
     /**
@@ -43,18 +45,32 @@ class AdminsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('admins-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        // Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+        ->columns($this->getColumns())
+        ->setTableId('data-table')
+        ->minifiedAjax()
+        ->addTableClass('table table-bordered table-striped ')
+        ->parameters([
+            'dom'          => 'Bfrtip',
+            "lengthMenu"=> [[10, 25, 50, -1], [10, 25, 50, "All"]],
+
+            'buttons'      =>[
+                ['extend' => 'create', 'className' => 'btn btn-success', 'text' => __('lang.create')],
+                ['extend' => 'print', 'className' => 'btn btn-info', 'text' => __('lang.print')],
+                ['extend' => 'excel', 'className' => 'btn btn-warning', 'text' => __('lang.excel')],
+                ['extend' => 'pdf', 'className' => 'btn btn-danger', 'text' => __('lang.pdf')],
+            ], 
+            'initComplete' => "function () {
+                this.api().columns([1,2]).every(function () {
+                    var column = this;
+                    var input = document.createElement(\"input\");
+                    input.className = \"f_search\";
+                    $(input).appendTo($(column.footer()).empty())
+                    .on('keyup', function () {
+                        column.search($(this).val(), false, false, true).draw();
+                    });
+                });
+            }",
+        ]);
     }
 
     /**
@@ -65,15 +81,35 @@ class AdminsDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            [
+                'defaultContent' => '',
+                'data'           => 'DT_RowIndex',
+                'name'           => 'DT_RowIndex',
+                'title'          => '#',
+                'render'         => null,
+                'orderable'      => false,
+                'searchable'     => false,
+                'exportable'     => false,
+                'printable'      => true,
+                'footer'         => '',
+            ],    [
+                'name' => 'name_'.app()->getLocale(),
+                'data' => 'name_'.app()->getLocale(),
+                'title' => __('lang.name')
+            ],    [
+                'name' => 'email',
+                'data' => 'email',
+                'title' => __('lang.email')
+            ],    [
+                'name' => 'action',
+                'data' => 'action',
+                'title' => __('lang.actions'),
+                'width' => 70,
+                'exportable' => false,
+                'orderable' => false,
+                'searchable' => false,
+                'printable' => false
+            ],
         ];
     }
 

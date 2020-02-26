@@ -8,7 +8,9 @@ use App\StudentAffairs\Level;
 use App\StudentAffairs\Stage;
 use App\StudentAffairs\Parentt;
 use App\StudentAffairs\Student;
+use App\DataTables\StudentDataTable;
 use App\StudentAffairs\AcademicYear;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller 
 {
@@ -18,11 +20,11 @@ class StudentController extends Controller
    *
    * @return Response
    */
-  public function index()
+  public function index(StudentDataTable $dataTable)
   {
-      // return $dataTable->render('studentAffairs\admin\all');
-      $records = Student::paginate(10);
-      return view('studentAffairs\student\all', compact('records'));
+      return $dataTable->render('studentAffairs\student\all');
+      // $records = Student::paginate(10);
+      // return view('studentAffairs\student\all', compact('records'));
   }
 
   /**
@@ -33,7 +35,8 @@ class StudentController extends Controller
   public function create()
   {
       $record = new Student();
-    return view('studentAffairs\student\create&edit_student', compact('record'));
+      $parent = new Parentt();
+    return view('studentAffairs\student\create&edit_student', compact('record', 'parent'));
   }
 
   /**
@@ -43,6 +46,8 @@ class StudentController extends Controller
    */
   public function store(Request $request)
   {
+
+
     // dd($request->request);
     $ay = AcademicYear::where('active', 1)->first();
     $lstd = Student::latest()->first();
@@ -84,9 +89,8 @@ class StudentController extends Controller
   }elseif(!$request->has('address_ar') && $request->has('address_en')){
     $request->merge(['address_ar' => $request->input('address_en')]);
   }
-
   // parent section
-  if($request->parent_name_ar==null && $request->parent_name_en==null){
+  if($request->parent_name_ar==null && $request->parent_name_en==null && $request->parent_phone == null){
     return back()->with('danger', __('lang.error'));
   }elseif($request->has('parent_name_ar') && !$request->has('parent_name_en')){
     $request->merge(['parent_name_en' => $request->input('parent_name_ar')]);
@@ -94,16 +98,24 @@ class StudentController extends Controller
     $request->merge(['parent_name_ar' => $request->input('parent_name_en')]);
   }
 
-    $record = Student::create($request->except('parent_name_ar','parent_name_en','parent_status'
-    ,'user_name','kindship','parent_email','parent_phone','parent_job'));
+
+
+  if($request->parent_email != null){
+
+
+    $parent = Parentt::create($request->only(['parent_name_ar','parent_name_en','parent_status'
+    ,'user_name','kindship','parent_email','parent_phone','parent_job','password']));
+  }else{
+
+    $parent = Parentt::where('parent_phone', $request->parent_phone)->first();
+  }
+
+
+    $record = $parent->students()->create($request->except('parent_name_ar','parent_name_en','parent_status'
+    ,'user_name','kindship','parent_email','parent_phone','parent_job', 'parentt_id','p_status'));
 
     $rel = $record->levels()->attach($request->level_id,['stage_id' => $request->stage_id, 'class_id'=> $request->class_id, 'student_code'=> $request->student_code,'academic_year_id' => $ay->id]);
     
-    $parent = Parentt::create($request->only(['parent_name_ar','parent_name_en','parent_status'
-    ,'user_name','kindship','parent_email','parent_phone','parent_job','password']));
-    $record->update(['parent_id' => $parent->id]);
-
-
     return redirect(route('student.index'))->with('success',__('lang.inserted'));
   }
 
@@ -127,8 +139,9 @@ class StudentController extends Controller
   public function edit($id)
   {
     $record = Student::find($id);
-    $parent = Parentt::find($record->parent_id);
-    return view('studentAffairs\student\create&edit_student', compact('record','parent'));
+    $rel = $record->levels;
+    $parent = $record->parent;
+    return view('studentAffairs\student\create&edit_student', compact('record','parent','rel'));
   }
 
   /**
@@ -142,20 +155,25 @@ class StudentController extends Controller
     $request->validate([
 
     ]);
-
+    $ay= AcademicYear::where('active',1)->first();
 
     $record = Student::find($id);
+    // dd($record->levels()->where('academic_year_id', $ay->id)->first());
+
     $request->merge(['password' => Hash::make($request->input('password'))]);
 
     $record->update($request->except('parent_name_ar','parent_name_en','parent_status'
     ,'user_name','kindship','parent_email','parent_phone','parent_job'));
    
-
-    $rel = $record->levels()->where('academic_year_id', AcademicYear::where('active',1)->pluck('id'))->sync($request->level_id,['stage_id' => $request->stage_id, 'class_id'=> $request->class_id, 'student_code'=> $request->student_code,'academic_year_id' => AcademicYear::where('active',1)->pluck('id')]);
+    $rel1 = $record->levels()->where('academic_year_id', $ay->id)->detach();
+    $rel2 = $record->levels()->attach($request->level_id,['stage_id' => $request->stage_id, 'class_id'=> $request->class_id, 'student_code'=> $record->student_code,'academic_year_id' => AcademicYear::where('active',1)->pluck('id')[0]]);
     
-    $parent = Parentt::create($request->only(['parent_name_ar','parent_name_en','parent_status'
+    $parent = Parentt::find($record->parentt_id);
+
+    $record->parent()->update($request->only(['parent_name_ar','parent_name_en','parent_status'
     ,'user_name','kindship','parent_email','parent_phone','parent_job','password']));
-    $record->update(['parent_id' => $parent->id]);
+
+    $record->update(['parentt_id' => $parent->id]);
 
 
     return redirect(route('student.index'))->with('success', __('lang.updated'));

@@ -1,4 +1,19 @@
+@extends('index')
 
+@section('title')
+    {{__('lang.stds')}}
+@endsection
+
+@section('content')
+{!! $dataTable->table([], true) !!}
+@endsection
+
+@push('scripts')
+    {{$dataTable->scripts()}}
+@endpush
+
+
+{{-- 
 @inject('levels', 'App\StudentAffairs\Level')
 @inject('stages', 'App\StudentAffairs\Stage')
 @inject('classes', 'App\StudentAffairs\Classs')
@@ -140,4 +155,4 @@ swalWithBootstrapButtons.fire({
         };
     </script>
     @endpush
-@endsection
+@endsection --}}

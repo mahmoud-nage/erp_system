@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\StudentAffairs\Classs;
+use App\DataTables\ClassDataTable;
 
 class ClassController extends Controller 
 {
@@ -13,15 +14,19 @@ class ClassController extends Controller
    *
    * @return Response
    */
-  public function index(Request $request)
+  public function index(Request $request, ClassDataTable $dataTable)
   {
     if($request->has('level_id')){
       $classes = Classs::where('level_id', $request->level_id)->get()->toArray();
       return ResponseJson(1,'messange', $classes);
     }
 
-      $records = Classs::paginate(10);
-      return view('studentAffairs\class\all', compact('records'));
+    $record = Classs::with('level')->get();
+    return $dataTable->render('studentAffairs\class\all', compact('record'));
+
+
+      // $records = Classs::paginate(10);
+      // return view('studentAffairs\class\all', compact('records'));
   }
 
   /**

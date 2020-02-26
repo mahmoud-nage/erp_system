@@ -53,9 +53,8 @@
                                                             <div class="controls">
                                                               <select class="stage" id="stage" name="stage_id" required data-placeholder="@if($stages->where('id', $record->stage_id)->first()) {{$stages->where('id', $record->stage_id)->pluck('name_'.app()->getLocale())}} @else {{__('lang.select_stage')}} @endif">
                                                                 <option value="">Stage</option>
-                                                                
                                                                 @foreach ($stages->all() as $stage)
-                                                                  <option value="{{$stage->id}}" @if($stage->id == $stages->where('id', $levels->where('id',$record->levels()->pluck('level_id'))->pluck('stage_id'))->pluck('id')[0]) selected @endif>{{$stage['name_'.app()->getLocale()]}}</option>
+                                                                  <option value="{{$stage->id}}" @if(isset($rel)) @foreach($rel as $l) @if($stage->id == $l->pivot->stage_id) selected @endif @endforeach @endif>{{$stage['name_'.app()->getLocale()]}}</option>
                                                                 @endforeach
                                                               </select>
                                                             </div>
@@ -65,8 +64,8 @@
                                                             <h5>{{__('lang.level')}}<span class="required" style="color:red">*</span></h5>
                                                             <div class="controls">
                                                               <select class="level" id="level" name="level_id" required data-placeholder="@if($levels->where('id', $record->level_id)->first()) {{$levels->where('id', $record->level_id)->pluck('name_'.app()->getLocale())}} @else {{__('lang.select_level')}} @endif">
-                                                                <option value=""  @if($levels->where('id',$record->levels()->pluck('level_id'))->pluck('name_'.app()->getLocale())[0]) selected @endif>level</option>
-                                                            </select>
+                                                              @if(isset($rel))  @foreach($rel as $l)  <option value="{{$l->id}}"   @if($l) selected @endif >{{$l['name_'.app()->getLocale()]}}</option> @endforeach @endif
+                                                              </select>
                                                             </div>
                                                           </div>
 
@@ -74,8 +73,8 @@
                                                             <h5>{{__('lang.class')}}<span class="required" style="color:red">*</span></h5>
                                                             <div class="controls">
                                                               <select class="class" id="class" name="class_id" required data-placeholder="@if($classes->where('id', $record->class_id)->first()) {{$classes->where('id', $record->class_id)->pluck('name_'.app()->getLocale())}} @else {{__('lang.select_class')}} @endif">
-                                                                <option value="1">class</option>
-                                                            </select>
+                                                              @if(isset($rel)) @foreach($rel as $l)  <option value="{{$l->pivot->class_id}}" @if($l->pivot->class_id) selected @endif >{{$classes->where('id', $l->pivot->class_id)->pluck('name_'.app()->getLocale())[0]}}</option>@endforeach @endif
+                                                              </select>
                                                             </div>
                                                           </div>
 
@@ -204,6 +203,7 @@
                                                                   <h5>{{__('lang.gender')}}<span class="required" style="color:red">*</span></h5>
                                                                   <div class="controls">
                                                                     <select class="gender" id="gender" name="gender" required data-placeholder="@if($record->gender) {{$record->gender}} @else {{__('lang.select_type')}} @endif">
+                                                                      <option value="">{{__('lang.gender')}}</option>
                                                                       <option value="1">{{__('lang.male')}}</option>
                                                                       <option value="2">{{__('lang.female')}}</option>
                                                                   </select>
@@ -214,6 +214,8 @@
                                                                   <h5>{{__('lang.nationality')}}<span class="required" style="color:red">*</span></h5>
                                                                   <div class="controls">
                                                                     <select class="nationality" id="nationality" name="nationality_id" required data-placeholder="@if($nationals->where('id', $record->nationality_id)->first()) {{$nationals->where('id', $record->nationality_id)->pluck('name_'.app()->getLocale())}} @else {{__('lang.select_nationality')}} @endif">
+                                                                      <option value="">{{__('lang.nationality')}}</option>
+                                                                      
                                                                       @foreach ($nationals->all() as $nationality)
                                                                         <option value="{{$nationality->id}}">{{$nationality['name_'.app()->getLocale()]}}</option>
                                                                       @endforeach
@@ -225,6 +227,8 @@
                                                                   <h5>{{__('lang.place')}}<span class="required" style="color:red">*</span></h5>
                                                                   <div class="controls">
                                                                     <select class="place" id="place" name="place_id" required data-placeholder="@if($places->where('id', $record->place_id)->first()) {{$places->where('id', $record->place_id)->pluck('name_'.app()->getLocale())}} @else {{__('lang.select_place')}} @endif">
+                                                                      <option value="">{{__('lang.place')}}</option>
+                                                                      
                                                                       @foreach ($places->all() as $place)
                                                                         <option value="{{$place->id}}">{{$place['name_'.app()->getLocale()]}}</option>
                                                                       @endforeach
@@ -236,6 +240,8 @@
                                                                   <h5>{{__('lang.region')}}<span class="required" style="color:red">*</span></h5>
                                                                   <div class="controls">
                                                                     <select class="region" id="region" name="region_id" required data-placeholder="@if($regions->where('id', $record->region_id)->first()) {{$regions->where('id', $record->stage_id)->pluck('name_'.app()->getLocale())}} @else {{__('lang.select_region')}} @endif">
+                                                                      <option value="">{{__('lang.region')}}</option>
+                                                                      
                                                                       @foreach ($regions->all() as $region)
                                                                         <option value="{{$region->id}}">{{$region['name_'.app()->getLocale()]}}</option>
                                                                       @endforeach
@@ -277,6 +283,8 @@
                                                             <h5>{{__('lang.religion')}}<span class="required" style="color:red">*</span></h5>
                                                             <div class="controls">
                                                               <select class="religion" id="religion" name="religion" required data-placeholder="@if($record->religion) {{$record->religion}} @else {{__('lang.select_religion')}} @endif">
+                                                                
+                                                                <option value="">{{__('lang.religion')}}</option>
                                                                 <option value="1">{{__('lang.muslim')}}</option>
                                                                 <option value="2">{{__('lang.qipty')}}</option>
                                                             </select>
@@ -287,6 +295,7 @@
                                                             <h5>{{__('lang.second_lang')}}<span class="required" style="color:red">*</span></h5>
                                                             <div class="controls">
                                                               <select class="second_lang" id="second_lang" name="second_lang" required data-placeholder="@if($record->second_lang) {{$record->second_lang}} @else {{__('lang.select_nd_lang')}} @endif">
+                                                                <option value="">{{__('lang.second_lang')}}</option>
                                                                 <option value="1">{{__('lang.nd_lang1')}}</option>
                                                                 <option value="2">{{__('lang.nd_lang2')}}</option>
                                                                 <option value="3">{{__('lang.nd_lang3')}}</option>
@@ -299,6 +308,7 @@
                                                             <h5>{{__('lang.class_major')}}<span class="required" style="color:red">*</span></h5>
                                                             <div class="controls">
                                                               <select class="class_major" id="class_major" name="class_major" required data-placeholder="@if($record->class_major) {{$record->class_major}} @else {{__('lang.select_major')}} @endif">
+                                                                <option value="">{{__('lang.class_major')}}</option>
                                                                 <option value="1">{{__('lang.major1')}}</option>
                                                                 <option value="2">{{__('lang.major2')}}</option>
                                                             </select>
@@ -312,14 +322,45 @@
                                               <!-- Step 3 -->
                                               <h6>{{__('lang.parent_info')}}</h6>
                                               <fieldset>
-                                                  <div class="row">
+                                                <div class="row">
+                                                  <div class="col-12">
+                                                    <div class="form-group">
+                                                      <h5>{{__('lang.status')}}<span class="required" style="color:red">*</span></h5>
+                                                      <div class="controls">
+                                                        <select class="status" id="status" name="p_status" required data-placeholder="@if($record->religion) {{$record->religion}} @else {{__('lang.select_religion')}} @endif">
+                                                          <option value="">{{__('lang.status')}}</option>
+                                                          <option value="old">{{__('lang.old')}}</option>
+                                                          <option value="new">{{__('lang.new')}}</option>
+                                                      </select>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div><br><br>
 
+                                                <div class="row">
+                                                  <div class="col-md-6 col-lg-6">
+                                                    <div class="form-group">
+                                                      <h5>{{__('lang.phone')}}<span class="required" style="color:red">*</span></h5>
+                                                        <div class="controls" id="message">
+                                                          <input id="parent_phone" value="{{$parent->parent_phone}}" type="tel" name="parent_phone" class="form-control @error('parent_phone') is-invalid @enderror "  data-validation-required-message="This field is required">
+                                                          @error('parent_phone')
+                                                          <span class="invalid-feedback" role="alert">
+                                                              <strong>{{ $message }}</strong>
+                                                          </span>
+                                                          @enderror
+                                                        </div>
+                                                      </div>
+                                                  </div>
+                                                </div><br><br>
+
+                                                  <div class="row" id='new' style="display: none">
+        
                                                     <div class="col-lg-6 col-md-12">
                                                         @if($supersetting->lang == "English" || $supersetting->lang == "Both" )
                                                         <div class="form-group">
                                                         <h5>{{__('lang.name_en')}}<span class="required" style="color:red">*</span></h5>
                                                           <div class="controls">
-                                                            <input value="{{$parent->parent_name_en}}" type="text" name="parent_name_en" class="form-control @error('parent_name_en') is-invalid @enderror " required data-validation-required-message="This field is required">
+                                                            <input value="{{$parent->parent_name_en}}" type="text" name="parent_name_en" class="form-control @error('parent_name_en') is-invalid @enderror " data-validation-required-message="This field is required">
                                                             @if(session('danger'))
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{session('danger')}}</strong>
@@ -340,7 +381,7 @@
                                                         <div class="form-group">
                                                           <h5>{{__('lang.name_ar')}}<span class="required" style="color:red">*</span></h5>
                                                           <div class="controls mb-1">
-                                                          <input id="parent_name_ar" value="{{$parent->parent_name_ar}}" type="text" name="parent_name_ar" class="form-control @error('parent_name_ar') is-invalid @enderror " required data-validation-required-message="This field is required">
+                                                          <input id="parent_name_ar" value="{{$parent->parent_name_ar}}" type="text" name="parent_name_ar" class="form-control @error('parent_name_ar') is-invalid @enderror "  data-validation-required-message="This field is required">
                                                           @if(session('danger'))
                                                           <span class="invalid-feedback" role="alert">
                                                               <strong>{{session('danger')}}</strong>
@@ -355,13 +396,12 @@
                                                         </div>
                                                         @endif
                                                       </div>
-                                                  </div>
-                                                  <div class="row">
+
                                                       <div class="col-md-12 col-lg-6">
                                                         <div class="form-group">
                                                             <h5>{{__('lang.job')}}<span class="required" style="color:red">*</span></h5>
                                                             <div class="controls mb-1">
-                                                            <input value="{{$parent->parent_job}}" type="text" name="parent_job" class="form-control @error('parent_job') is-invalid @enderror " required data-validation-required-message="This field is required">
+                                                            <input value="{{$parent->parent_job}}" type="text" name="parent_job" class="form-control @error('parent_job') is-invalid @enderror "  data-validation-required-message="This field is required">
                                                             @error('parent_job')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -373,7 +413,7 @@
                                                           <div class="form-group">
                                                             <h5>{{__('lang.email')}}<span class="required" style="color:red">*</span></h5>
                                                             <div class="controls mb-1">
-                                                            <input value="{{$parent->parent_email}}" type="email" name="parent_email" class="form-control @error('parent_email') is-invalid @enderror " required data-validation-required-message="This field is required">
+                                                            <input value="{{$parent->parent_email}}" type="email" name="parent_email" class="form-control @error('parent_email') is-invalid @enderror "  data-validation-required-message="This field is required">
                                                             @error('parent_email')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -385,7 +425,8 @@
                                                           <div class="form-group">
                                                             <h5>{{__('lang.kindship')}}<span class="required" style="color:red">*</span></h5>
                                                             <div class="controls">
-                                                              <select class="kindship" id="kindship" name="kindship" required data-placeholder="@if($record->kindship) {{$record->kindship}} @else {{__('lang.select_kindship')}} @endif">
+                                                              <select class="kindship" id="kindship" name="kindship" data-placeholder="@if($record->kindship) {{$record->kindship}} @else {{__('lang.select_kindship')}} @endif">
+                                                                <option value="">{{__('lang.kindship')}}</option>
                                                                 <option value="1">{{__('lang.father')}}</option>
                                                                 <option value="2">{{__('lang.mother')}}</option>
                                                                 <option value="1">{{__('lang.gfather')}}</option>
@@ -401,23 +442,24 @@
                                                       
                                                       <div class="col-md-12 col-lg-6">
 
-                                                          
+{{--                                                           
                                                         <div class="form-group">
                                                             <h5>{{__('lang.phone')}}<span class="required" style="color:red">*</span></h5>
                                                               <div class="controls">
-                                                                <input value="{{$parent->parent_phone}}" type="tel" name="parent_phone" class="form-control @error('parent_phone') is-invalid @enderror " required data-validation-required-message="This field is required">
+                                                                <input value="{{$parent->parent_phone}}" type="tel" name="parent_phone" class="form-control @error('parent_phone') is-invalid @enderror "  data-validation-required-message="This field is required">
                                                                 @error('parent_phone')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
                                                                 </span>
                                                                 @enderror
                                                               </div>
-                                                            </div>
+                                                            </div> --}}
 
                                                         <div class="form-group">
                                                             <h5>{{__('lang.status')}}<span class="required" style="color:red">*</span></h5>
                                                             <div class="controls">
-                                                              <select class="parent_status" id="parent_status" name="parent_status" required data-placeholder="@if($record->parent_status) {{$record->parent_status}} @else {{__('lang.select_status')}} @endif">
+                                                              <select class="parent_status" id="parent_status" name="parent_status" data-placeholder="@if($record->parent_status) {{$record->parent_status}} @else {{__('lang.select_status')}} @endif">
+                                                                <option value="">{{__('lang.status')}}</option>
                                                                 <option value="1">{{__('lang.life')}}</option>
                                                                 <option value="2">{{__('lang.dead')}}</option>
                                                             </select>
@@ -428,55 +470,7 @@
 
                                                       </div>
                                                   </div>
-                                              </fieldset>
-                                              <!-- Step 4 -->
-                                              <h6>{{__('lang.auth')}}</h6>
-                                              <fieldset>
                                                   <div class="row">
-                                                      <div class="col-md-12 col-lg-6">
-                                                    
-
-                                                          <div class="form-group">
-                                                            <h5>{{__('lang.std_code')}}<span class="required" style="color:red">*</span></h5>
-                                                            <div class="controls mb-1">
-                                                            <input value="{{$record->student_code}}" disabled type="text" name="student_code" class="form-control @error('student_code') is-invalid @enderror " required data-validation-required-message="This field is required">
-                                                            @error('student_code')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
-                                                          </div>
-                                                          </div>
-
-                                                          <div class="form-group">
-                                                            <h5>{{__('lang.user_name')}}<span class="required" style="color:red">*</span></h5>
-                                                            <div class="controls mb-1">
-                                                            <input value="{{$record->user_name}}" type="text" name="user_name" class="form-control @error('user_name') is-invalid @enderror " required data-validation-required-message="This field is required">
-                                                            @error('user_name')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
-                                                          </div>
-                                                          </div>
-
-                                                       
-                                                      </div>
-                                                      <div class="col-md-12 col-lg-6">
-                                                        <div class="form-group">
-                                                            <h5>{{__('lang.password')}}<span class="required" style="color:red">*</span></h5>
-                                                            <div class="controls mb-1">
-                                                            <input value="{{$parent->password}}" type="text" disabled name="password" class="form-control @error('password') is-invalid @enderror " required data-validation-required-message="This field is required">
-                                                            @error('password')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
-                                                          </div>
-                                                          </div>
-                                                      </div>
-
-                                                  </div>
                                                   <div class="col-lg-12 col-md-12">
                                                     <div class="form-group @if(app()->getLocale() == 'ar') text-right @endif">
                                                       @if(!empty($record) && $record['name_'.app()->getLocale()] == null)
@@ -488,9 +482,8 @@
                                                       <button type="reset" class="btn btn-danger">{{__('lang.reset')}} <i class="fa fa-refresh position-right"></i></button>
                                                     </div>
                                                   </div>
+                                                </div>
                                               </fieldset>
-                                                              
-
                                           </form>
                                       </div>
                                   </div>
@@ -533,7 +526,7 @@
                 success:function(data){
                     if(data.status === 1){
                       $("#class").empty();
-                      $("#class").append('<option>Level</option>');
+                      $("#class").append('<option>class</option>');
                         $.each(data.data, function(index, level){
                             $("#class").append(new Option(level.name_ar, level.id));
                             console.log(level.name_ar, $("#class").val(), $("#level").val());
@@ -545,8 +538,34 @@
         }
     });
 
+    $('#status').on('change',function(){
+        var st = $('#status').val();
+        if(st == 'old'){
+        $("#new").css("display", "none");
+          $("#old").css("display", "block");
+        }else if(st == 'new'){
+          $("#old").css("display", "none");
+          $("#new").css("display", "block");
+        }
+    });
 
+$('#parent_phone').change(function(){
+      
+  var parent_phone = $('#parent_phone').val();
+  console.log(parent_phone);
+         if(parent_phone){
+            $.ajax({
+                url : "{{url('/parent?parent_phone=')}}" + parent_phone,
+                type: "GET",
+                success:function(data){
+                  console.log(data.message);
+                  $("#message #alert").remove();
+                      $("#message").append('<div class="alert alert-success" id="alert">'+ data.message +'</div>');
+                    },
+            });
+        }
 
+});
 
 
 });

@@ -1,6 +1,6 @@
 <?php
 
-function ResponseJson($status, $message, $data=""){
+function ResponseJson($status, $message="", $data=""){
         $response = [
           'status' => $status,
           'message' => $message,

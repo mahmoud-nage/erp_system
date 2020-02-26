@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\StudentAffairs\Place;
+use App\DataTables\PlaceDataTable;
 
 class PlaceController extends Controller 
 {
@@ -12,10 +13,12 @@ class PlaceController extends Controller
    *
    * @return Response
    */
-  public function index()
+  public function index(PlaceDataTable $dataTable)
   {
-      $records = Place::paginate(10);
-      return view('studentAffairs\place\all', compact('records'));
+    return $dataTable->render('studentAffairs\place\all');
+
+      // $records = Place::paginate(10);
+      // return view('studentAffairs\place\all', compact('records'));
   }
 
   /**

@@ -13,10 +13,8 @@
     <meta name="keywords" content="admin template, Apex admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
 {{-- // datatable --}}
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     {{-- //fontawesome --}}
     <link href="{{asset('fontawesome/css/fontawesome.css')}}" rel="stylesheet">
     <link href="{{asset('fontawesome/css/brands.css')}}" rel="stylesheet">
@@ -24,7 +22,6 @@
 {{-- // sweet_alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-<title>@yield('title')</title>
 
     <link rel="apple-touch-icon" sizes="60x60" href="{{url('/')}}/admin/app-assets/img/ico/apple-icon-60.html">
     <link rel="apple-touch-icon" sizes="76x76" href="{{url('/')}}/admin/app-assets/img/ico/apple-icon-76.html">

@@ -1,0 +1,11 @@
+<a class="btn btn-info" href="{{route('academicyear.edit', $id)}}" style="width:50px">
+    <i class="fas fa-user-edit"></i>
+</a>
+<form action="{{route('academicyear.destroy', $id)}}" method="POST">
+    @csrf
+    @method('DELETE')
+   
+        <button onclick="confirms()" class="btn btn-danger" style="width:50px">
+            <i class="fas fa-trash-alt" ></i>
+        </button>
+</form>

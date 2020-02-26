@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\StudentAffairs\Level;
+use App\DataTables\LevelDataTable;
 
 class LevelController extends Controller 
 {
@@ -13,14 +14,17 @@ class LevelController extends Controller
    *
    * @return Response
    */
-  public function index(Request $request)
+  public function index(Request $request, LevelDataTable $dataTable)
   {
     if($request->has('stage_id')){
       $levels = Level::where('stage_id', $request->stage_id)->get()->toArray();
       return ResponseJson(1,'messange', $levels);
     }
-      $records = Level::paginate(10);
-      return view('studentAffairs\level\all', compact('records'));
+
+    return $dataTable->render('studentAffairs\level\all');
+
+      // $records = Level::paginate(10);
+      // return view('studentAffairs\level\all', compact('records'));
   }
 
   /**

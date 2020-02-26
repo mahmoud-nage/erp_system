@@ -144,7 +144,10 @@
                 url : "{{url('/level?stage_id=')}}" + stage_id,
                 type: "GET",
                 success:function(data){
+
                     if(data.status === 1){
+                      $("#level").empty();
+                      $("#level").append('<option>Level</option>');
                         $.each(data.data, function(index, level){
                             $("#level").append(new Option(level.name_ar, level.id));
                             console.log(level.name_ar, $("#class").val(), $("#level").val());

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\DataTables\PermissionDataTable;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
@@ -12,10 +13,12 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PermissionDataTable $dataTable)
     {
-        $records = Permission::all();
-        return view('studentAffairs\permission\all', compact('records'));
+        return $dataTable->render('studentAffairs\permission\all');
+
+        // $records = Permission::all();
+        // return view('studentAffairs\permission\all', compact('records'));
     }
 
     /**
@@ -39,7 +42,7 @@ class PermissionController extends Controller
     {
         $request->validate([
             'name_ar' => 'required|unique:permissions',
-            'name_en' => 'required|unique:permissions',
+            'name' => 'required|unique:permissions',
 
 //            'role_list' => 'required|array',
         ]);
