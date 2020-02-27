@@ -22,6 +22,30 @@
 
 @push('scripts')
     {{$dataTable->scripts()}}
+            <script>
+      var s_admin = {!! json_encode(auth()->guard('admin')->user()->hasRole('super admin')) !!};
+                
+                if(!s_admin){
+                    var create = {!! json_encode(auth()->guard('admin')->user()->can('create class')) !!};
+                    var edit = {!! json_encode(auth()->guard('admin')->user()->can('edit class')) !!};
+                    var del = {!! json_encode(auth()->guard('admin')->user()->can('destroy class')) !!};
+                var print = {!! json_encode(auth()->guard('admin')->user()->can('print')) !!};
+                var excel = {!! json_encode(auth()->guard('admin')->user()->can('excel')) !!};
+                var pdf = {!! json_encode(auth()->guard('admin')->user()->can('pdf')) !!};
+                if(!create){
+                     $('.buttons-create').addClass('disabled');
+            } if(!edit){
+                     $('.edit').addClass('disabled');
+            } if(!del){
+                     $('.delete').addClass('disabled');
+            }        if(!print){
+                     $('.buttons-print').addClass('disabled');
+            }        if(!excel){
+                     $('.buttons-excel').addClass('disabled');
+            }        if(!pdf){
+                     $('.buttons-pdf').addClass('disabled');
+            }}
+</script>
 @endpush
 
 {{-- @section('content')

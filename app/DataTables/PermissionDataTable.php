@@ -2,12 +2,12 @@
 
 namespace App\DataTables;
 
-use App\StudentAffairs\Permission;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Services\DataTable;
-use Yajra\DataTables\Html\Editor\Fields;
+use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Services\DataTable;
 
 class PermissionDataTable extends DataTable
 {
@@ -91,21 +91,26 @@ class PermissionDataTable extends DataTable
                 'exportable'     => false,
                 'printable'      => true,
                 'footer'         => '',
+                'width' => 10
             ],
                 [
                 'name' => 'name',
                 'data' => 'name',
                 'title' => __('lang.name')
+            ],  [
+                'name' => 'route',
+                'data' => 'route',
+                'title' => __('lang.route')
             ],
             [
                 'name' => 'action',
                 'data' => 'action',
                 'title' => __('lang.actions'),
-                'width' => 70,
                 'exportable' => false,
                 'orderable' => false,
                 'searchable' => false,
-                'printable' => false
+                'printable' => false,
+                'width' => 50
             ],
         ];
     }

@@ -81,11 +81,10 @@
                                                       </div>
                                                   </div>
 
-                                                
                                               </fieldset>
                                               <!-- Step 2 -->
                                               <h6>{{__('lang.std_info')}}</h6>
-                                              <fieldset>
+                                              <fieldset id="std_info">
                                                   <div class="row">
                                                       <div class="col-lg-6 col-md-12">
                                                         @if($supersetting->lang == "English" || $supersetting->lang == "Both" )
@@ -327,9 +326,8 @@
                                                     <div class="form-group">
                                                       <h5>{{__('lang.status')}}<span class="required" style="color:red">*</span></h5>
                                                       <div class="controls">
-                                                        <select class="status" id="status" name="p_status" required data-placeholder="@if($record->religion) {{$record->religion}} @else {{__('lang.select_religion')}} @endif">
+                                                        <select class="status" id="status" name="p_status" data-placeholder="@if($record->religion) {{$record->religion}} @else {{__('lang.select_religion')}} @endif">
                                                           <option value="">{{__('lang.status')}}</option>
-                                                          <option value="old">{{__('lang.old')}}</option>
                                                           <option value="new">{{__('lang.new')}}</option>
                                                       </select>
                                                       </div>
@@ -338,7 +336,7 @@
                                                 </div><br><br>
 
                                                 <div class="row">
-                                                  <div class="col-md-6 col-lg-6">
+                                                        <div class="col-md-6 col-lg-6">
                                                     <div class="form-group">
                                                       <h5>{{__('lang.phone')}}<span class="required" style="color:red">*</span></h5>
                                                         <div class="controls" id="message">
@@ -351,13 +349,13 @@
                                                         </div>
                                                       </div>
                                                   </div>
-                                                </div><br><br>
+                                                </div>
 
                                                   <div class="row" id='new' style="display: none">
         
                                                     <div class="col-lg-6 col-md-12">
                                                         @if($supersetting->lang == "English" || $supersetting->lang == "Both" )
-                                                        <div class="form-group">
+                                                        <div class="form-group" >
                                                         <h5>{{__('lang.name_en')}}<span class="required" style="color:red">*</span></h5>
                                                           <div class="controls">
                                                             <input value="{{$parent->parent_name_en}}" type="text" name="parent_name_en" class="form-control @error('parent_name_en') is-invalid @enderror " data-validation-required-message="This field is required">
@@ -396,6 +394,8 @@
                                                         </div>
                                                         @endif
                                                       </div>
+
+                                                
 
                                                       <div class="col-md-12 col-lg-6">
                                                         <div class="form-group">
@@ -442,8 +442,8 @@
                                                       
                                                       <div class="col-md-12 col-lg-6">
 
-{{--                                                           
-                                                        <div class="form-group">
+                                                          
+                                                        {{-- <div class="form-group" id='new old' style="display: none">
                                                             <h5>{{__('lang.phone')}}<span class="required" style="color:red">*</span></h5>
                                                               <div class="controls">
                                                                 <input value="{{$parent->parent_phone}}" type="tel" name="parent_phone" class="form-control @error('parent_phone') is-invalid @enderror "  data-validation-required-message="This field is required">
@@ -540,12 +540,10 @@
 
     $('#status').on('change',function(){
         var st = $('#status').val();
-        if(st == 'old'){
-        $("#new").css("display", "none");
-          $("#old").css("display", "block");
-        }else if(st == 'new'){
-          $("#old").css("display", "none");
+  if(st == 'new'){
           $("#new").css("display", "block");
+        }else{
+          $("#new").css("display", "none");
         }
     });
 

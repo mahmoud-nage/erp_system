@@ -2,7 +2,6 @@
 // english doc
 return [
     // general
-    'welcome' => 'welcome to our system',
 
     // session
     'inserted' => "Inserted Successfuly",
@@ -23,6 +22,17 @@ return [
     'show' => 'Show',
     'active' => 'Active',
     'actions' => 'Actions',
+
+    // auth
+    'welcome_msg' => 'Welcome back, please login to our system.',
+    'login' => 'LogIN',
+    'foget_pass' => 'Foget Password ?',
+    'remember' => 'Remember Me',
+    'lang' => 'Language',
+    'en' => 'English',
+    'ar' => 'Arabic',
+
+
 
 
 

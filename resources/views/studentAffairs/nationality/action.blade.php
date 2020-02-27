@@ -1,12 +1,13 @@
-<a class="btn btn-info" href="{{route('nationality.edit', $id)}}" style="width:50px">
+<div style="display:inline-flex">
+<a class="" href="{{route('nationality.edit', $id)}}" style="padding: 0 5px">
     <i class="fas fa-user-edit"></i>
 </a>
-
 <form action="{{route('nationality.destroy', $id)}}" method="POST">
     @csrf
     @method('DELETE')
    
-        <button onclick="alert()" class="btn btn-danger" style="width:50px">
+        <button onclick="confirms()" class="" style="background: none;border: none;color: red; display:inline-flex">
             <i class="fas fa-trash-alt" ></i>
         </button>
 </form>
+</div>

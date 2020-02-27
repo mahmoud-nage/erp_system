@@ -33,7 +33,12 @@ class ClassDataTable extends DataTable
      */
     public function query(Classs $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->select('stages.name_'.app()->getLocale().' as stage_name',
+        'levels.name_'.app()->getLocale().' as level_name',
+        'classes.name_'.app()->getLocale().' as class_name',
+        'classes.id as id')
+        ->join('levels', 'classes.level_id', '=', 'levels.id')
+        ->join('stages', 'levels.stage_id', '=', 'stages.id');
     }
 
     /**
@@ -93,23 +98,28 @@ class ClassDataTable extends DataTable
                 'exportable'     => false,
                 'printable'      => true,
                 'footer'         => '',
-            ],    [
-                'name' => 'name_'.app()->getLocale(),
-                'data' => 'name_'.app()->getLocale(),
-                'title' => __('lang.name')
+                'width' => 10
             ],     [
-                'name' => 'level_id',
-                'data' => 'level_id',
+                'name' => 'classes.name_'.app()->getLocale(),
+                'data' => 'class_name',
                 'title' => __('lang.level')
+            ],  [
+                'name' => 'levels.name_'.app()->getLocale(),
+                'data' => 'level_name',
+                'title' => __('lang.level')
+            ],     [
+                'name' => 'stages.name_'.app()->getLocale(),
+                'data' => 'stage_name',
+                'title' => __('lang.stage')
             ],    [
                 'name' => 'action',
                 'data' => 'action',
                 'title' => __('lang.actions'),
-                'width' => 70,
                 'exportable' => false,
                 'orderable' => false,
                 'searchable' => false,
-                'printable' => false
+                'printable' => false,
+                'width' => 50
             ],
         ];
     }

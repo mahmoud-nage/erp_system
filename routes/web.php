@@ -16,6 +16,12 @@ Route::any('/sys-login', function () {
 });
 
 Route::any('/logins', 'AdminController@login');
+Route::any('/forget-pass', 'AdminController@forget_pass');
+Route::any('/forget', function(){
+    return view('studentAffairs.auth.forgot-pass');
+
+});
+
 
 // multi language [ar,en]
 Route::get('lang/{lang}', function ($lang) {
@@ -31,6 +37,7 @@ Route::get('lang/{lang}', function ($lang) {
 Route::resource('admins', 'AdminController');
 
 Route::group(['middleware' => 'auth:admin'], function () {
+
     // welcome page 
     // Route::get('/', function () {
     //     return view('index');

@@ -22,7 +22,6 @@ class AdminsDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-
             ->addColumn('action', 'studentAffairs.admin.action');
     }
 
@@ -69,7 +68,12 @@ class AdminsDataTable extends DataTable
                         column.search($(this).val(), false, false, true).draw();
                     });
                 });
-            }",
+            
+            }
+            
+       
+            ",
+
         ]);
     }
 
@@ -92,6 +96,7 @@ class AdminsDataTable extends DataTable
                 'exportable'     => false,
                 'printable'      => true,
                 'footer'         => '',
+                'width' => 10
             ],    [
                 'name' => 'name_'.app()->getLocale(),
                 'data' => 'name_'.app()->getLocale(),
@@ -104,11 +109,11 @@ class AdminsDataTable extends DataTable
                 'name' => 'action',
                 'data' => 'action',
                 'title' => __('lang.actions'),
-                'width' => 70,
                 'exportable' => false,
                 'orderable' => false,
                 'searchable' => false,
-                'printable' => false
+                'printable' => false,
+                'width' => 50
             ],
         ];
     }

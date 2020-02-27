@@ -5,11 +5,44 @@
 @endsection
 
 @section('content')
-{!! $dataTable->table([], true) !!}
+<div class="card">
+    <div class="card-header">
+        <h1 >{{__('lang.admins')}}</h1><br>
+    </div><!-- /.card-header -->
+    <div class="card-body">
+        <div>
+            <div class="row">
+                <div class="col-sm-12">
+                    {!! $dataTable->table([], true) !!}
+                </div></div></div></div></div>
 @endsection
 
 @push('scripts')
     {{$dataTable->scripts()}}
+        <script>
+                   var create = {!! json_encode(auth()->guard('admin')->user()->can('create student')) !!};
+                    var edit = {!! json_encode(auth()->guard('admin')->user()->can('edit student')) !!};
+                    var del = {!! json_encode(auth()->guard('admin')->user()->can('destroy student')) !!};
+                var print = {!! json_encode(auth()->guard('admin')->user()->can('print')) !!};
+                var excel = {!! json_encode(auth()->guard('admin')->user()->can('excel')) !!};
+                var pdf = {!! json_encode(auth()->guard('admin')->user()->can('pdf')) !!};
+                var s_admin = {!! json_encode(auth()->guard('admin')->user()->hasRole('super admin')) !!};
+                
+                if(!s_admin){
+                if(!create){
+                     $('.buttons-create').addClass('disabled');
+            }  if(!edit){
+                     $('.edit').addClass('disabled');
+            } if(!del){
+                     $('.delete').addClass('disabled');
+            }        if(!print){
+                     $('.buttons-print').addClass('disabled');
+            }        if(!excel){
+                     $('.buttons-excel').addClass('disabled');
+            }        if(!pdf){
+                     $('.buttons-pdf').addClass('disabled');
+            }}
+</script>
 @endpush
 
 

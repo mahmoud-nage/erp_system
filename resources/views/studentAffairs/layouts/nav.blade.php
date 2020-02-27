@@ -20,9 +20,13 @@
                         <div class="dropdown-menu dropdown-menu-right text-left">
 
                             @if($supersetting->lang == "English" || $supersetting->lang == "Both" )
+                            <i class="fas fa-check" style="color:red"></i>
+                            
                             <a href="{{route('lang','en')}}" class="dropdown-item py-1"><img src="{{url('/')}}/admin/app-assets/img/flags/us.png" class="langimg" /><span> English</span></a>
                             @endif
                             @if($supersetting->lang == "Arabic" || $supersetting->lang == "Both" )
+                            <i class="fas fa-check" style="color:red"></i>
+                            
                             <a href="{{route('lang','ar')}}" class="dropdown-item py-1"><img src="{{url('/')}}/admin/app-assets/img/flags/ar.png" class="langimg" /><span> Arabic</span></a>
                             @endif
                         </div>

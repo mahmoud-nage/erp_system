@@ -22,8 +22,9 @@ class LevelDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-
             ->addColumn('action', 'studentAffairs.level.action');
+            
+
     }
 
     /**
@@ -34,7 +35,9 @@ class LevelDataTable extends DataTable
      */
     public function query(Level $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->select('levels.name_'.app()->getLocale().' as level_name',
+        'stages.name_'.app()->getLocale().' as stage_name', 'levels.id as id')
+        ->join('stages', 'stages.id', '=', 'levels.stage_id');
     }
 
     /**
@@ -51,7 +54,7 @@ class LevelDataTable extends DataTable
         ->addTableClass('table table-bordered table-striped ')
         ->parameters([
             'dom'          => 'Bfrtip',
-            "lengthMenu"=> [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "lengthMenu" => [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
 
             'buttons'      =>[
                 ['extend' => 'create', 'className' => 'btn btn-success', 'text' => __('lang.create')],
@@ -92,23 +95,24 @@ class LevelDataTable extends DataTable
                 'exportable'     => false,
                 'printable'      => true,
                 'footer'         => '',
+                'width' => 10
             ],    [
                 'name' => 'name_'.app()->getLocale(),
-                'data' => 'name_'.app()->getLocale(),
+                'data' => 'level_name',
                 'title' => __('lang.name')
             ],    [
-                'name' => 'stage_id',
-                'data' => 'stage_id',
+                'name' => 'name_'.app()->getLocale(),
+                'data' => 'stage_name',
                 'title' => __('lang.stage')
             ],    [
                 'name' => 'action',
                 'data' => 'action',
                 'title' => __('lang.actions'),
-                'width' => 70,
                 'exportable' => false,
                 'orderable' => false,
                 'searchable' => false,
-                'printable' => false
+                'printable' => false,
+                'width' => 50
             ],
         ];
     }

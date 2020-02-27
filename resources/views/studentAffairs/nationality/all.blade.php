@@ -21,6 +21,24 @@
 
 @push('scripts')
     {{$dataTable->scripts()}}
+            <script>
+          var s_admin = {!! json_encode(auth()->guard('admin')->user()->hasRole('super admin')) !!};
+                
+                if(!s_admin){
+                    var create = {!! json_encode(auth()->guard('admin')->user()->can('create nationality')) !!};
+                var print = {!! json_encode(auth()->guard('admin')->user()->can('print')) !!};
+                var excel = {!! json_encode(auth()->guard('admin')->user()->can('excel')) !!};
+                var pdf = {!! json_encode(auth()->guard('admin')->user()->can('pdf')) !!};
+                if(!create){
+                     $('.buttons-create').addClass('disabled');
+            }        if(!print){
+                     $('.buttons-print').addClass('disabled');
+            }        if(!excel){
+                     $('.buttons-excel').addClass('disabled');
+            }        if(!pdf){
+                     $('.buttons-pdf').addClass('disabled');
+            }}
+</script>
 @endpush
 
 {{-- @section('content')

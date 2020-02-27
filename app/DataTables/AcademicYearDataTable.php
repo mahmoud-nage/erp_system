@@ -21,6 +21,7 @@ class AcademicYearDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->addIndexColumn()
             ->addColumn('action', 'studentAffairs.academicyear.action');
     }
 
@@ -80,28 +81,35 @@ class AcademicYearDataTable extends DataTable
     {
         return [
             [
-                'name' => 'id',
-                'data' => 'id',
-                'title' => 'Id',
-                'width' => 10,
-                
-            ],    [
+                'defaultContent' => '',
+                'data'           => 'DT_RowIndex',
+                'name'           => 'DT_RowIndex',
+                'title'          => '#',
+                'render'         => null,
+                'orderable'      => false,
+                'searchable'     => false,
+                'exportable'     => false,
+                'printable'      => true,
+                'footer'         => '',
+                'width' => 10
+            ],     [
                 'name' => 'year',
                 'data' => 'year',
                 'title' => __('lang.year')
             ],    [
                 'name' => 'active',
                 'data' => 'active',
-                'title' => __('lang.active')
-            ],    [
+                'title' => __('lang.active'),
+                'className' => 'active'
+            ],     [
                 'name' => 'action',
                 'data' => 'action',
                 'title' => __('lang.actions'),
-                'width' => 70,
                 'exportable' => false,
                 'orderable' => false,
                 'searchable' => false,
-                'printable' => false
+                'printable' => false,
+                'width' => 50
             ],
         ];
     }

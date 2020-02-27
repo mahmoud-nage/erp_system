@@ -18,17 +18,20 @@ class AutoCheckPermission
      */
     public function handle($request, Closure $next)
     {
-        $routeName = $request->route()->getName();
 
+        if(auth()->guard()->user()->hasRole('super admin')){
+            return $next($request);  
+        }
+
+        $routeName = $request->route()->getName();
         $permission = Permission::whereRaw("FIND_IN_SET ('$routeName', route)")->first();
         if ($permission) {
-            if (!$request->user()->can($permission->name)) {
-                abort(403);
+            if ($request->guard('admin')->user()->can($permission->name)) {
+                        return $next($request);  
             }
         }else{
             abort(403);
         }
 
-        return $next($request);
     }
 }

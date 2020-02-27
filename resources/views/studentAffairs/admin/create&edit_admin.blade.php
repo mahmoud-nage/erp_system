@@ -113,59 +113,56 @@
                   </div>
                 </div>
               </div>
+
+
+
+              <div class="form-group role">
+                <label for="role_list">{{__('lang.roles')}}</label><br>
+                <a class="checkAllRole btn btn-sm btn-primary">checkAll</a>
+                <a class="uncheckAllRole btn btn-sm btn-warning">uncheckAll</a>
                 <div class="row">
-  <div class="form-group">
-    <h5>{{__('lang.permission')}}<span class="required" style="color:red">*</span></h5>
-    <div class="controls mb-1">
-      @foreach($permission->all() as $p)
-      <div class="col-md-3 col-lg-3">
-          <div class="checkbox">
-              <label>
-                <div class="col-1">  <input type="checkbox" id="permission_list" value="{{$p->id}}" name="permission_list[]"
-                         @if($record->hasPermissionTo($p->name))
-                         checked
-                      @endif
-                  ></div>
-                  {{$p->name}}
-              </label>
-          </div>
-      </div>
-  @endforeach
-  </div>
+                    @foreach($role->all() as $p)
+                        <div class="col-md-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="role_list" value="{{$p->id}}" name="role_list[]"
+                                           @if($record->hasRole($p->name))
+                                           checked
+                                        @endif
+                                    >
+                                    {{$p->name}}
+                                </label>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+                <div class="form-group permission">
+    <label for="permission_list">{{__('lang.permissions')}}</label><br>
+    <a class="checkAllPermission btn btn-sm btn-primary">checkAll</a>
+    <a class="uncheckAllPermission btn btn-sm btn-warning">uncheckAll</a>
+    <div class="row">
+        @foreach($permission->all() as $p)
+            <div class="col-md-3">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="permission_list" value="{{$p->id}}" name="permission_list[]"
+                               @if($record->hasPermissionTo($p->name))
+                               checked
+                            @endif
+                        >
+                        {{$p->name}}
+                    </label>
+                </div>
+            </div>
+        @endforeach
+    </div>
 </div>
 
 
-                </div>
 
-
-
-                <div class="row">
-                  <div class="col-md-12 col-md-6">
-
-                  <div class="form-group">
-                    <h5>{{__('lang.permission')}}<span class="required" style="color:red">*</span></h5>
-                    <div class="controls mb-1">
-                      @foreach($role->all() as $r)
-                      <div class="col-md-3 col-lg-3">
-                          <div class="checkbox">
-                              <label>
-                                <div class="col-1">  <input type="checkbox" id="role_list" value="{{$r->id}}" name="role_list[]"
-                                         @if($record->hasRole($r->name))
-                                         checked
-                                      @endif
-                                  ></div>
-                                  {{$r->name}}
-                              </label>
-                          </div>
-                      </div>
-                  @endforeach
-                  </div>
-                </div>
-
-                </div>
-              </div>
-
-                
+               
                 <div class="row">
 
                   <div class="col-lg-12 col-md-12">
@@ -188,9 +185,31 @@
   </div>
 </section>
 
-<script>
+@push('scripts')
+    <script>
+        $('.checkAllPermission').click(function(){
+            $('.permission input:checkbox').each(function(){
+                $(this).prop('checked',true);
+            })
+        });
+        $('.uncheckAllPermission').click(function(){
+            $('.permission input:checkbox').each(function(){
+                $(this).prop('checked',false);
+            })
+        });
+        $('.checkAllRole').click(function(){
+            $('.role input:checkbox').each(function(){
+                $(this).prop('checked',true);
+            })
+        });
+        $('.uncheckAllRole').click(function(){
+            $('.role input:checkbox').each(function(){
+                $(this).prop('checked',false);
+            })
+        });
 
-</script>
+    </script>
+@endpush
 <!-- Input Validation end -->
 
 @endsection

@@ -92,6 +92,7 @@ class RegionDataTable extends DataTable
                 'exportable'     => false,
                 'printable'      => true,
                 'footer'         => '',
+                'width' => 10
             ],    [
                 'name' => 'name_'.app()->getLocale(),
                 'data' => 'name_'.app()->getLocale(),
@@ -104,11 +105,11 @@ class RegionDataTable extends DataTable
                 'name' => 'action',
                 'data' => 'action',
                 'title' => __('lang.actions'),
-                'width' => 70,
                 'exportable' => false,
                 'orderable' => false,
                 'searchable' => false,
-                'printable' => false
+                'printable' => false,
+                'width' => 50
             ],
         ];
     }

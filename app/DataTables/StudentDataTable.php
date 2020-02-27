@@ -12,6 +12,7 @@ use Yajra\DataTables\Services\DataTable;
 
 class StudentDataTable extends DataTable
 {
+
     /**
      * Build DataTable class.
      *
@@ -35,19 +36,38 @@ class StudentDataTable extends DataTable
     public function query(Student $model)
     {
         // dd($model->id);
-        return $model->newQuery()->select(['stages.name_'.app()->getLocale().' as stage_name',
+
+        $role = auth()->guard('admin')->user()->roles?auth()->guard('admin')->user()->roles->where('model_id','>','0')->pluck('model_id')->toArray():'';
+        
+        if($role){
+            $tablename = auth()->guard('admin')->user()->roles->where('model_id','>','0')->pluck('table_name')->toArray();
+            
+            // dd($tablename);
+            return $model->newQuery()->select('stages.name_'.app()->getLocale().' as stage_name',
+            'levels.name_'.app()->getLocale().' as level_name',
+            'classes.name_'.app()->getLocale().' as class_name',
+            'students.name_'.app()->getLocale().' as std_name',
+            'students.student_code as std_code', 
+            'students.id as id')
+            ->join('level_student', 'level_student.student_id', '=', 'students.id')
+            ->join('stages', 'level_student.stage_id', '=', 'stages.id')
+            ->join('levels', 'level_student.level_id', '=', 'levels.id')
+            ->join('classes', 'level_student.stage_id', '=', 'classes.id');
+        }
+        return $model->newQuery()->select('stages.name_'.app()->getLocale().' as stage_name',
         'levels.name_'.app()->getLocale().' as level_name',
         'classes.name_'.app()->getLocale().' as class_name',
-        'students.name_'.app()->getLocale().' as std_name'])
-        ->where('students.id', '=',$model->id)
+        'students.name_'.app()->getLocale().' as std_name',
+        'students.student_code as std_code', 
+        'students.id as id')
         ->join('level_student', 'level_student.student_id', '=', 'students.id')
         ->join('stages', 'level_student.stage_id', '=', 'stages.id')
         ->join('levels', 'level_student.level_id', '=', 'levels.id')
-        ->join('classes', 'level_student.stage_id', '=', 'classes.id')->get();
+        ->join('classes', 'level_student.stage_id', '=', 'classes.id');
 
     }
 
-//     protected function getdata(){
+    protected function getdata(Student $model){
 
 
 // // dd(auth()->user()->roles->pluck('model_id'));
@@ -62,8 +82,58 @@ class StudentDataTable extends DataTable
 // // ->join('classes', 'level_student.stage_id', '=', 'classes.id')->get()->response()->json();
 
 // // return $data;
+// $role = auth()->guard('admin')->user()->roles?auth()->guard('admin')->user()->roles->where('model_id','>','0')->pluck('model_id')->toArray():'';
+// $data = [];
+// if($role){
 
+
+//     $tablename = auth()->guard('admin')->user()->roles->where('model_id','>','0')->pluck('table_name')->toArray();
+// foreach($tablename as $index => $t){
+//     if($index == 0){
+
+//         $data = $modelselect('stages.name_'.app()->getLocale().' as stage_name',
+//         'levels.name_'.app()->getLocale().' as level_name',
+//         'classes.name_'.app()->getLocale().' as class_name',
+//         'students.name_'.app()->getLocale().' as std_name',
+//         'students.student_code as std_code', 
+//         'students.id as id')
+//         ->whereIn($t.'id',$role[$index])
+//         ->join('level_student', 'level_student.student_id', '=', 'students.id')
+//         ->join('stages', 'level_student.stage_id', '=', 'stages.id')
+//         ->join('levels', 'level_student.level_id', '=', 'levels.id')
+//         ->join('classes', 'level_student.stage_id', '=', 'classes.id');
+//     }else{
+//         // dd('next');
+//         $data += $model->newQuery()->select('stages.name_'.app()->getLocale().' as stage_name',
+//         'levels.name_'.app()->getLocale().' as level_name',
+//         'classes.name_'.app()->getLocale().' as class_name',
+//         'students.name_'.app()->getLocale().' as std_name',
+//         'students.student_code as std_code', 
+//         'students.id as id')
+//         ->whereIn($t.'id',$role[$index])
+//         ->join('level_student', 'level_student.student_id', '=', 'students.id')
+//         ->join('stages', 'level_student.stage_id', '=', 'stages.id')
+//         ->join('levels', 'level_student.level_id', '=', 'levels.id')
+//         ->join('classes', 'level_student.stage_id', '=', 'classes.id');
 //     }
+
+// }
+// return $data;
+
+            // $data += $model->select('stages.name_'.app()->getLocale().' as stage_name',
+            // 'levels.name_'.app()->getLocale().' as level_name',
+            // 'classes.name_'.app()->getLocale().' as class_name',
+            // 'students.name_'.app()->getLocale().' as std_name',
+            // 'students.student_code as std_code', 
+            // 'students.id as id')
+            // ->whereIn('')
+            // ->join('level_student', 'level_student.student_id', '=', 'students.id')
+            // ->join('stages', 'level_student.stage_id', '=', 'stages.id')
+            // ->join('levels', 'level_student.level_id', '=', 'levels.id')
+            // ->join('classes', 'level_student.stage_id', '=', 'classes.id');
+            // return $$data->newQuery();
+        // }
+    }
 
     /**
      * Optional method if you want to use html builder.
@@ -79,7 +149,8 @@ class StudentDataTable extends DataTable
         ->addTableClass('table table-bordered table-striped')
         ->parameters([
             'dom'          => 'Bfrtip',
-            "lengthMenu"=> [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            'processing' => true,
+            'serverSide' => true,
 
             'buttons'      =>[
                 ['extend' => 'create', 'className' => 'btn btn-success', 'text' => __('lang.create')],
@@ -88,17 +159,21 @@ class StudentDataTable extends DataTable
                 ['extend' => 'pdf', 'className' => 'btn btn-danger', 'text' => __('lang.pdf')],
             ], 
             'initComplete' => "function () {
-                // alert($.fn.dataTable.ext.errMode = 'throw');
+                
+                
                 this.api().columns([1,2,3,4,5]).every(function () {
                     var column = this;
                     var input = document.createElement(\"input\");
                     input.className = \"f_search\";
+                    input.style = \"width:100px \" ;
                     $(input).appendTo($(column.footer()).empty())
                     .on('keyup', function () {
                         column.search($(this).val(), false, false, true).draw();
                     });
                 });
-            }"
+            }
+        
+            "
         ]);
     }
 
@@ -110,10 +185,14 @@ class StudentDataTable extends DataTable
     protected function getColumns()
     {
         
-        // $datas = $this->getdata();
 // $s = Student::find(17);
-        // dd($this->query($s)->toJson());
+
+// dd($this->getdata($s));
+
+// dd($this->query($s)->toJson());
 // dd($datas);
+//         $role = auth()->guard('admin')->user()->roles;
+// dd($role);
         return [
             [
                 'defaultContent' => '',
@@ -126,23 +205,40 @@ class StudentDataTable extends DataTable
                 'exportable'     => false,
                 'printable'      => true,
                 'footer'         => '',
+                'width' => 10
             ],
 
             [
-                'name' => 'name_'.app()->getLocale(),
-                'data' => 'name_'.app()->getLocale(),
+                'name' => 'students.student_code',
+                'data' => 'std_code',
+                'title' => __('lang.std_code'),
+            ],  [
+                'name' => 'students.name_'.app()->getLocale(),
+                'data' => 'std_name',
                 'title' => __('lang.name')
-            ], 
+            ],  [
+                'name' => 'stages.name_'.app()->getLocale(),
+                'data' => 'stage_name',
+                'title' => __('lang.stage')
+            ],  [
+                'name' => 'levels.name_'.app()->getLocale(),
+                'data' => 'level_name',
+                'title' => __('lang.level')
+            ],  [
+                'name' => 'classes.name_'.app()->getLocale(),
+                'data' => 'class_name',
+                'title' => __('lang.class')
+            ],
 
            [
                 'name' => 'action',
                 'data' => 'action',
                 'title' => __('lang.actions'),
-                'width' => 70,
                 'exportable' => false,
                 'orderable' => false,
                 'searchable' => false,
-                'printable' => false
+                'printable' => false,
+                'width' => 50
             ],
         ];
     }
