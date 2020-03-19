@@ -38,9 +38,9 @@ return [
 
         // general pages
     'admin' => 'المستخدم',
-    'stage' => 'المرحله',
-    'level' => 'صف',
-    'class' => 'فصل',
+    'stage' => 'الشعبة',
+    'level' => 'التخصص',
+    'class' => 'الفرقة',
     'std_affairs' => 'شئون طلاب',
     'std' => 'طالب',
     'region' => 'المنطقه',
@@ -52,9 +52,9 @@ return [
 
     
     'admins' => 'المستخدمسن',
-    'stages' => 'المراحل',
-    'levels' => 'الصفوف',
-    'classes' => 'الفصول',
+    'stages' => 'الشعب',
+    'levels' => 'التخصصات',
+    'classes' => 'الفرق',
     'stds' => 'الطلاب',
     'regions' => 'المناطق',
     'nationalities' => 'الجنسيات',
@@ -65,9 +65,9 @@ return [
 
 
     'select_admin' => 'اختر مستخدم',
-    'select_stage' => 'اختر مرحله',
-    'select_level' => 'اختر صف',
-    'select_class' => 'اختر فصل',
+    'select_stage' => 'اختر شعبة',
+    'select_level' => 'اختر تخصص',
+    'select_class' => 'اختر فرقة',
     'select_std' => 'اختر طالب',
     'select_region' => 'اختر منطقه',
     'select_nationality' => 'اختر جنسيه',
@@ -76,9 +76,9 @@ return [
     'select_permission' => 'اختر صلاحيه ',
 
     'edit_admin' => 'تعديل مستخدم',
-    'edit_stage' => 'تعديل مرحله',
-    'edit_level' => 'تعديل صف',
-    'edit_class' => 'تعديل فصل',
+    'edit_stage' => 'تعديل شعبة',
+    'edit_level' => 'تعديل تخصص',
+    'edit_class' => 'تعديل فرقة',
     'edit_std' => 'تعديل طالب',
     'edit_region' => 'تعديل منطقه',
     'edit_nationality' => 'تعديل جنسيه',
@@ -89,9 +89,9 @@ return [
 
 
     'new_admin' => 'اضافه مستخدم',
-    'new_stage' => 'اضافه مرحله',
-    'new_level' => 'اضافه صف',
-    'new_class' => 'اضافه فصل',
+    'new_stage' => 'اضافه شعبة',
+    'new_level' => 'اضافه تخصص',
+    'new_class' => 'اضافه فرقة',
     'new_std' => 'اضافه طالب',
     'new_region' => 'اضافه منطقه',
     'new_nationality' => 'اضافه جنسيه',
@@ -124,8 +124,8 @@ return [
             'school_name_en' => 'اسم المدرسه بالانجليزيه',
             'educ_admin_name_ar' => 'اسم الاداره بالعربيه',
             'educ_admin_name_en' => 'اسم الاداره بالانجليزيه',
-            'stages_ar' => 'المراحل بالعربيه',
-            'stages_en' => 'المراحل بالانجليزيه',
+            'stages_ar' => 'الشعب بالعربيه',
+            'stages_en' => 'الشعب بالانجليزيه',
 
                    // for student form
         'auth' => 'تسجيل الدخول',
@@ -183,5 +183,19 @@ return [
         'year' => 'السنه',
         'group' => 'المجموعه',
 
+
+        'year' => 'الفرقة',
+        'courses' => 'المواد الدراسية ',
+        'course' => 'المادة',
+        'course_course' => 'المادة',
+        'teacher_en' => ' اسم الدكتور انجليزى  ',
+        'teacher_ar' => 'اسم الدكتور عربى ',
+        'new_material' => 'الدروس',
+        'title' => 'عنوان الدرس',
+        'video_url' => 'رابط الفيديو يوتيوب',
+        'new_course' => 'درس جديد',
+        'sources' => 'الملف (ورد, اكسل , بى دى اف , باور بوينت , صور)',
+        
+        
             // for student affairs
 ];

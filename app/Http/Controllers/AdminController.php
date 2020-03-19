@@ -21,11 +21,11 @@ class AdminController extends Controller
    */
   public function index(AdminsDataTable $dataTable)
   {
-      return $dataTable->render('studentAffairs\admin\all');
+      return $dataTable->render('studentAffairs.admin.all');
       // $records = Admin::find(1);
       // $records->permissions;
       // dd( $records->permissions);
-      // return view('studentAffairs\admin\all', compact('records'));
+      // return view('studentAffairs.admin.all', compact('records'));
   }
 
   /**
@@ -36,7 +36,7 @@ class AdminController extends Controller
   public function create()
   {
       $record = new Admin();
-    return view('studentAffairs\admin\create&edit_admin', compact('record'));
+    return view('studentAffairs.admin.create&edit_admin', compact('record'));
   }
 
   /**
@@ -81,7 +81,7 @@ class AdminController extends Controller
   public function edit($id)
   {
     $record = Admin::find($id);
-    return view('studentAffairs\admin\create&edit_admin', compact('record'));
+    return view('studentAffairs.admin.create&edit_admin', compact('record'));
   }
 
   /**
@@ -141,7 +141,7 @@ class AdminController extends Controller
   {
 
     if($request->password == null){
-        return view('studentAffairs\auth\forgot-pass');
+        return view('studentAffairs.auth.forgot-pass');
     }
       $request->validate([
           'email' => 'required|exists:admins',

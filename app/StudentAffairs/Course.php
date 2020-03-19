@@ -9,21 +9,20 @@ class Course extends Model
 
     protected $table = 'courses';
     public $timestamps = true;
-    protected $fillable = array('name_ar', 'performance_grade', 'mid_term_grade', 'term_grade', 'total_course_grade', 'low_course_grade', 'control_authority', 'degree_factor', 'level_id', 'name_en');
+    protected $fillable = array('name_ar', 'name_en','teacher_ar', 'teacher_en', 'classs_id', 'level_id');
 
     public function level()
     {
         return $this->belongsTo('App\StudentAffairs\Level', 'level_id');
     }
-
-    public function students()
+    public function class()
     {
-        return $this->belongsToMany('App\StudentAffairs\Student', 'student_id')->withPivot('total_course_grade','low_course_grade');
+        return $this->belongsTo('App\StudentAffairs\Class', 'classs_id');
     }
 
-    public function examAbsents()
+    public function files()
     {
-        return $this->hasMany('App\StudentAffairs\ExamAbsent');
+        return $this->morphMany('App\File', 'fileable');
     }
 
 }

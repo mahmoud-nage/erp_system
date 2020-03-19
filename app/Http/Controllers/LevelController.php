@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\StudentAffairs\Level;
 use App\DataTables\LevelDataTable;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+
+
 
 class LevelController extends Controller 
 {
@@ -21,10 +25,10 @@ class LevelController extends Controller
       return ResponseJson(1,'messange', $levels);
     }
 
-    return $dataTable->render('studentAffairs\level\all');
+    return $dataTable->render('studentAffairs.level.all');
 
       // $records = Level::paginate(10);
-      // return view('studentAffairs\level\all', compact('records'));
+      // return view('studentAffairs.level.all', compact('records'));
   }
 
   /**
@@ -35,7 +39,7 @@ class LevelController extends Controller
   public function create()
   {
       $record = new Level();
-    return view('studentAffairs\level\create&edit_level', compact('record'));
+    return view('studentAffairs.level.create&edit_level', compact('record'));
   }
 
   /**
@@ -49,7 +53,6 @@ class LevelController extends Controller
     $request->validate([
       // 'name_ar'  => 'unique:levels',
       // 'name_en'  => 'unique:levels',
-      'cost'     => 'required',
       'stage_id' => 'required',
 
   ]);
@@ -62,7 +65,7 @@ class LevelController extends Controller
     $request->merge(['name_ar' => $request->input('name_en')]);
   }
 
-
+    $request->merge(['password' => Hash::make($request->input('password'))]);
     $record = Level::create($request->all());
 
     return redirect(route('level.index'))->with('success', __('lang.inserted'));
@@ -77,7 +80,7 @@ class LevelController extends Controller
   public function edit($id)
   {
     $record = Level::find($id);
-    return view('studentAffairs\level\create&edit_level', compact('record'));
+    return view('studentAffairs.level.create&edit_level', compact('record'));
   }
 
   /**
@@ -91,7 +94,7 @@ class LevelController extends Controller
     $request->validate([
         // 'name_ar' => 'unique:levels,name_ar,'.$id,
         // 'name_en' => 'unique:levels,name_en,'.$id,
-        'cost' => 'required',
+        // 'cost' => 'required',
         'stage_id' => 'required',
     ]);
     if($request->name_ar==null && $request->name_en==null){
@@ -102,6 +105,10 @@ class LevelController extends Controller
       $request->merge(['name_ar' => $request->input('name_en')]);
     }
 
+    if($request->has('password') && $request->password != null)
+    {
+      $request->merge(['password' => Hash::make($request->input('password'))]);
+    }
     $record = Level::find($id);
     $record->update($request->all());
     

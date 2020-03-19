@@ -11,15 +11,11 @@ class CreateCoursesTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 			$table->string('name_ar');
-			$table->float('performance_grade');
-			$table->float('mid_term_grade');
-			$table->float('term_grade');
-			$table->float('total_course_grade');
-			$table->float('low_course_grade');
-			$table->integer('control_authority');
-			$table->float('degree_factor')->nullable();
-			$table->integer('level_id')->unsigned();
 			$table->string('name_en');
+			$table->string('teacher_ar');
+			$table->string('teacher_en');
+			$table->integer('level_id')->unsigned();
+			$table->integer('class_id')->unsigned();
 		});
 	}
 

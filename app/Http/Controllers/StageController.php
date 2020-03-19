@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\SuperAdmin;
 use Illuminate\Http\Request;
 use App\StudentAffairs\Stage;
 use App\DataTables\StageDataTable;
+use App\Http\Controllers\Controller;
+
+
 
 class StageController extends Controller 
 {
@@ -17,8 +19,8 @@ class StageController extends Controller
   public function index(StageDataTable $dataTable)
   {
       // $records = Stage::paginate(10);
-      // return view('studentAffairs\stage\all', compact('records'));
-      return $dataTable->render('studentAffairs\stage\all');
+      // return view('studentAffairs.stage.all', compact('records'));
+      return $dataTable->render('studentAffairs.stage.all');
 
   }
 
@@ -30,7 +32,7 @@ class StageController extends Controller
   public function create()
   {
       $record = new Stage();
-    return view('studentAffairs\stage\create&edit_stage', compact('record'));
+    return view('studentAffairs.stage.create&edit_stage', compact('record'));
   }
 
   /**
@@ -67,7 +69,7 @@ class StageController extends Controller
   public function edit($id)
   {
     $record = Stage::find($id);
-    return view('studentAffairs\stage\create&edit_stage', compact('record'));
+    return view('studentAffairs.stage.create&edit_stage', compact('record'));
   }
 
 

@@ -47,7 +47,7 @@ class SettingController extends Controller
   public function edit($id)
   {
     $record = Setting::find($id);
-    return view('studentAffairs\setting\edit_setting', compact('record'));
+    return view('studentAffairs.setting.edit_setting', compact('record'));
   }
 
 

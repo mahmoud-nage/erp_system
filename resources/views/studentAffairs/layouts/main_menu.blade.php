@@ -1,4 +1,4 @@
-             {{-- notes --}}
+             notes
     {{-- //has-sub class for arrow --}}
     
 <div data-active-color="black" data-background-color="man-of-steel" data-image="http://localhost/mnagy/ERP_school/public/admin/app-assets/img/sidebar-bg/03.jpg" class="app-sidebar  @if(app()->getLocale() == 'ar') text-right @endif">
@@ -84,78 +84,35 @@
                     </ul> --}}
                 </li>
                                             @endif
-
-                {{-- // std_affairs --}}
-                @if(auth()->guard('admin')->user()->can('students') | auth()->guard('admin')->user()->can('create student')
-                |auth()->guard('admin')->user()->can('edit student')|auth()->guard('admin')->user()->can('destroy student')
-                |auth()->guard('admin')->user()->can('show student')|auth()->guard('admin')->user()->hasRole('super admin'))
-            <li class=" nav-item"><a href="{{route('student.index')}}"><i class="ft-home"></i><span data-i18n="" class="menu-title">{{__('lang.stds')}}</span></a>
-                {{-- <ul class="menu-content">
-                <li><a href="{{route('student.index')}}" class="menu-item">{{__('lang.stds')}}</a>
-                    </li>
-                <li><a href="{{route('student.create')}}" class="menu-item">{{__('lang.new_std')}}</a>
-                    </li>
-                </ul> --}}
-            </li>
-                                            @endif
-
-                    {{-- // nationality --}}
-                @if(auth()->guard('admin')->user()->can('nationalities') | auth()->guard('admin')->user()->can('create nationality')
-                |auth()->guard('admin')->user()->can('edit nationality')|auth()->guard('admin')->user()->can('destroy nationality')
-                |auth()->guard('admin')->user()->can('show nationality')|auth()->guard('admin')->user()->hasRole('super admin'))
-                    <li class=" nav-item"><a href="{{route('nationality.index')}}"><i class="ft-home"></i><span data-i18n="" class="menu-title">{{__('lang.nationalities')}}</span></a>
+                {{-- // Courses --}}
+                @if(auth()->guard('admin')->user()->can('courses') | auth()->guard('admin')->user()->can('create course')
+                |auth()->guard('admin')->user()->can('edit course')|auth()->guard('admin')->user()->can('destroy course')
+                |auth()->guard('admin')->user()->can('show course')|auth()->guard('admin')->user()->hasRole('super admin'))
+                <li class=" nav-item"><a href="{{route('course.index')}}"><i class="ft-home"></i><span data-i18n="" class="menu-title">{{__('lang.courses')}}</span></a>
                     {{-- <ul class="menu-content">
-                    <li><a href="{{route('nationality.index')}}" class="menu-item">{{__('lang.nationalities')}}</a>
+                    <li><a href="{{route('course.index')}}" class="menu-item">{{__('lang.courses')}}</a>
                         </li>
-                    <li><a href="{{route('nationality.create')}}" class="menu-item">{{__('lang.new_nationality')}}</a>
+                    <li><a href="{{route('class.create')}}" class="menu-item">{{__('lang.new_class')}}</a>
                         </li>
                     </ul> --}}
                 </li>
                                             @endif
+                                                       {{-- // Materials --}}
 
-                   {{-- // place --}}
-                                @if(auth()->guard('admin')->user()->can('places') | auth()->guard('admin')->user()->can('create place')
-                |auth()->guard('admin')->user()->can('edit place')|auth()->guard('admin')->user()->can('destroy place')
-                |auth()->guard('admin')->user()->can('show place')|auth()->guard('admin')->user()->hasRole('super admin'))
-                   <li class=" nav-item"><a href="{{route('place.index')}}"><i class="ft-home"></i><span data-i18n="" class="menu-title">{{__('lang.places')}}</span></a>
-                    {{-- <ul class="menu-content">
-                    <li><a href="{{route('place.index')}}" class="menu-item">{{__('lang.places')}}</a>
+                @if(auth()->guard('admin')->user()->can('materials') | auth()->guard('admin')->user()->can('create material')
+                |auth()->guard('admin')->user()->can('edit material')|auth()->guard('admin')->user()->can('destroy material')
+                |auth()->guard('admin')->user()->can('show material')|auth()->guard('admin')->user()->hasRole('super admin'))
+                <li class="has-sub nav-item"><a href="#"><i class="ft-home"></i><span data-i18n="" class="menu-title">{{__('lang.new_material')}}</span></a>
+                    <ul class="menu-content">
+                        <li><a href="{{route('material.create')}}" class="menu-item">{{__('lang.new_material')}}</a>
+                            </li>
+                    <li><a href="{{url('/select-course')}}" class="menu-item">{{__('lang.edit_material')}}</a>
                         </li>
-                    <li><a href="{{route('place.create')}}" class="menu-item">{{__('lang.new_place')}}</a>
-                        </li>
-                    </ul> --}}
+                    </ul>
+                    
                 </li>
-                                            @endif
+                                            @endif                                           
 
-                       {{-- // region --}}
-                                @if(auth()->guard('admin')->user()->can('regions') | auth()->guard('admin')->user()->can('create region')
-                |auth()->guard('admin')->user()->can('edit region')|auth()->guard('admin')->user()->can('destroy region')
-                |auth()->guard('admin')->user()->can('show region')|auth()->guard('admin')->user()->hasRole('super admin'))
-            <li class=" nav-item"><a href="{{route('region.index')}}"><i class="ft-home"></i><span data-i18n="" class="menu-title">{{__('lang.regions')}}</span></a>
-                {{-- <ul class="menu-content">
-                <li><a href="{{route('region.index')}}" class="menu-item">{{__('lang.regions')}}</a>
-                    </li>
-                <li><a href="{{route('region.create')}}" class="menu-item">{{__('lang.new_region')}}</a>
-                    </li>
-                </ul> --}}
-            </li>
-                                            @endif
-
-                            {{-- // academicyear --}}
-                                @if(auth()->guard('admin')->user()->can('academicyears') | auth()->guard('admin')->user()->can('create academicyear')
-                |auth()->guard('admin')->user()->can('edit academicyear')|auth()->guard('admin')->user()->can('destroy academicyear')
-                |auth()->guard('admin')->user()->can('show academicyear')|auth()->guard('admin')->user()->hasRole('super admin'))
-                   <li class=" nav-item"><a href="{{route('academicyear.index')}}"><i class="ft-home"></i><span data-i18n="" class="menu-title">{{__('lang.ac_years')}}</span></a>
-                    {{-- <ul class="menu-content">
-                    <li><a href="{{route('academicyear.index')}}" class="menu-item">{{__('lang.ac_years')}}</a>
-                        </li>
-                    <li><a href="{{route('academicyear.create')}}" class="menu-item">{{__('lang.new_ac_year')}}</a>
-                        </li>
-                    </ul> --}}
-                </li>
-                                            @endif
-
-        
                        {{-- // setting --}}
                                 @if(auth()->guard('admin')->user()->can('settings') | auth()->guard('admin')->user()->can('create setting')
                 |auth()->guard('admin')->user()->can('edit setting')|auth()->guard('admin')->user()->can('destroy setting')

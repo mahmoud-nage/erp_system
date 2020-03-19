@@ -2,14 +2,17 @@
 
 namespace App\StudentAffairs;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+
 use Illuminate\Database\Eloquent\Model;
 
-class Level extends Model 
+class Level extends Authenticatable 
 {
 
     protected $table = 'levels';
     public $timestamps = true;
-    protected $fillable = array('name_ar', 'name_en', 'cost', 'stage_id', 'st_instalment', 'nd_instalment', 'rd_instalment', 'th_instalment', 'st_inst_date', 'nd_inst_date', 'rd_inst_date', 'th_inst_date');
+    protected $fillable = array('name_ar', 'name_en', 'user_name', 'password', 'stage_id');
 
     public function stage()
     {
@@ -24,31 +27,6 @@ class Level extends Model
     public function courses()
     {
         return $this->hasMany('App\StudentAffairs\Course');
-    }
-
-    public function financial()
-    {
-        return $this->morphMany('App\StudentAffairs\Financial', 'financialable');
-    }
-
-    public function discount()
-    {
-        return $this->morphMany('App\StudentAffairs\Discount', 'discountable');
-    }
-
-    public function students()
-    {
-        return $this->belongsToMany('App\StudentAffairs\Student');
-    }
-
-    public function controls()
-    {
-        return $this->hasMany('App\StudentAffairs\Control');
-    }
-
-    public function debts()
-    {
-        return $this->morphMany('App\StudentAffairs\Debt', 'debtable');
     }
 
 }

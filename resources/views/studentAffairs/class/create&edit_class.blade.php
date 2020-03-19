@@ -29,12 +29,12 @@
             @if(!empty($record) && $record['name_'.app()->getLocale()] == null)
                    {{-- @dd('create') --}}
                     <div class=" content-header col-lg-12 @if(app()->getLocale() == 'ar') text-right @endif">{{__('lang.new_class')}}</div><br>
-                    <form class="form-horizontal" method="POST" action="{{route('class.store')}}">
+                    <form class="form-horizontal" method="POST" action="{{route('class.store')}}" >
 
                 @else
                    {{-- @dd('update') --}}
                    <div class=" content-header col-lg-12 @if(app()->getLocale() == 'ar') text-right @endif">{{__('lang.edit_class')}}</div><br>
-                    <form class="form-horizontal" method="POST" action="{{route('class.update', $record->id)}}">
+                    <form class="form-horizontal" method="POST" action="{{route('class.update', $record->id)}}" >
 
                 @endif
 
@@ -86,26 +86,61 @@
               </div>
               <div class="row">
                   <div class="col-lg-6 col-md-12">
+
+                                  
+                    @if($supersetting->type == 1)
+                    <div class="form-group">
+                      <h5>{{__('lang.user_name')}}<span class="required" style="color:red">*</span></h5>
+                      <div class="controls mb-1">
+                      <input value="{{$record->user_name}}" type="text" name="user_name" class="form-control @error('user_name') is-invalid @enderror" required data-validation-required-message="This field is required">
+                      @error('user_name')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                      @enderror
+                    </div>
+                    </div>
+                    @endif
+                    
                     <div class="form-group">
                       <h5>{{__('lang.stage')}}<span class="required" style="color:red">*</span></h5>
                       <div class="controls">
-                        <select class="stage" id="stage" name="stage_id" required data-placeholder="@if($stages->where('id', $record->stage_id)->first()) {{$stages->where('id', $record->stage_id)->pluck('name_'.app()->getLocale())[0]}} @else {{__('lang.select_stage')}} @endif">
+                        <select class="stage" id="stage" name="stage_id" @if($record['name_'.app()->getLocale()]) required @endif data-placeholder="@if($stages->where('id', $record->stage_id)->first()) {{$stages->where('id', $record->stage_id)->pluck('name_'.app()->getLocale())[0]}} @else {{__('lang.select_stage')}} @endif">
+                        <option value=""></option>
                           @foreach ($stages->all() as $stage)
                             <option value="{{$stage->id}}">{{$stage['name_'.app()->getLocale()]}}</option>
                           @endforeach
                         </select>
                       </div>
-                    </div></div>
+                    </div>
+    
+
+                  </div>
                     <div class="col-lg-6 col-md-12">
                     
+                  @if($supersetting->type == 1)
+                  <div class="form-group">
+                    <h5>{{__('lang.password')}}<span class="required" style="color:red">*</span></h5>
+                    <div class="controls mb-1">
+                    <input value="{{$record->password}}" type="text" name="password" class="form-control @error('password') is-invalid @enderror" required data-validation-required-message="This field is required">
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div>
+                  </div>
+                  @endif
+
                   <div class="form-group">
                     <h5>{{__('lang.level')}}<span class="required" style="color:red">*</span></h5>
                     <div class="controls">
-                      <select class="level" id="level" name="level_id" required data-placeholder="@if($levels->where('id', $record->level_id)->first()) {{$levels->where('id', $record->level_id)->pluck('name_'.app()->getLocale())[0]}} @else {{__('lang.select_level')}} @endif">
+                      <select class="level" id="level" name="level_id"  @if($record['name_'.app()->getLocale()]) required @endif data-placeholder="@if($levels->where('id', $record->level_id)->first()) {{$levels->where('id', $record->level_id)->pluck('name_'.app()->getLocale())[0]}} @else {{__('lang.select_level')}} @endif">
                         <option value="1">level</option>
                     </select>
                     </div>
                   </div>
+
 
                 </div>
 

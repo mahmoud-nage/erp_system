@@ -9,5 +9,5 @@ class SuperAdmin extends Model
     protected $table = 'super_admins';
     public $timestamps = true;
 
-    protected $fillable = array('lang');
+    protected $fillable = array('lang', 'type');
 }

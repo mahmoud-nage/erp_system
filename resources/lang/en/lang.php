@@ -31,6 +31,8 @@ return [
     'lang' => 'Language',
     'en' => 'English',
     'ar' => 'Arabic',
+    'pass_confirm' => 'Password Changed',
+    'pass_not_confirm' => 'Please Check Your Mail',
 
 
 
@@ -42,9 +44,9 @@ return [
 
         // general pages
     'admin' => 'Admin',
-    'stage' => 'Stage',
-    'level' => 'Level',
-    'class' => 'Class',
+    'stage' => 'Department',
+    'level' => 'Section',
+    'class' => 'Year',
     'std_affairs' => 'Student Affairs',
     'std' => 'Student',
     'region' => 'Region',
@@ -55,9 +57,9 @@ return [
     'permission' => 'Permission',
 
     'admins' => 'Admins',
-    'stages' => 'Stages',
-    'levels' => 'Levels',
-    'classes' => 'Classes',
+    'stages' => 'Department',
+    'levels' => 'Section',
+    'classes' => 'Years',
     'std_affairs' => 'Student Affairs',
     'stds' => 'Students',
     'regions' => 'Regions',
@@ -67,9 +69,9 @@ return [
     'permissions'=> 'Permissions',
 
     'select_admin' => 'Selcet Admin',
-    'select_stage' => 'Selcet Stage',
-    'select_level' => 'Selcet Level',
-    'select_class' => 'Selcet Class',
+    'select_stage' => 'Selcet Department',
+    'select_level' => 'Selcet Section',
+    'select_class' => 'Selcet Year',
     'select_std' => 'Selcet Student',
     'select_region' => 'Selcet Region',
     'select_nationality' => 'Select Nationality',
@@ -80,9 +82,9 @@ return [
 
 
     'edit_admin' => 'Edit Admin',
-    'edit_stage' => 'Edit Stage',
-    'edit_level' => 'Edit Level',
-    'edit_class' => 'Edit Class',
+    'edit_stage' => 'Edit Department',
+    'edit_level' => 'Edit Section',
+    'edit_class' => 'Edit Year',
     'edit_std' => 'Edit Student',
     'edit_region' => 'Edit Region',
     'edit_nationality' => 'Edit Nationality',
@@ -93,9 +95,9 @@ return [
 
 
     'new_admin' => 'New Admin',
-    'new_stage' => 'New Stage',
-    'new_level' => 'New Level',
-    'new_class' => 'New Class',
+    'new_stage' => 'New Department',
+    'new_level' => 'New Section',
+    'new_class' => 'New Year',
     'new_std' => 'New Student',
     'new_region' => 'New Region',
     'new_nationality' => 'New Nationality',
@@ -130,15 +132,15 @@ return [
         'school_name_en' => 'English School Name',
         'educ_admin_name_ar' => 'Arabic Adminstration Name',
         'educ_admin_name_en' => 'English Adminstration Name',
-        'stages_ar' => 'Arabic Stages',
-        'stages_en' => 'English Stages',
+        'stages_ar' => 'Arabic Department',
+        'stages_en' => 'English Department',
 
 
         // for student form
         'auth' => 'Authetication',
         'parent_info' => 'Parent Information',
         'std_code' => 'Student Code',
-        'user_name' => 'Parent User Name',
+        'user_name' => 'User Name',
         'job' => 'Job Title',
         'status' => 'Status',
         'address_en' => 'English Address',
@@ -190,8 +192,23 @@ return [
         'other' => 'Other',
         'group' => 'Group',
         'year' => 'Year',
+        'courses' => 'Courses',
+        'course' => 'Course',
+        'course_course' => 'New Course',
+        'teacher_en' => 'English Doctor Name ',
+        'teacher_ar' => 'Arabic Doctor Name',
+        'new_material' => 'Lessons',
+        'title' => 'Lesson Title',
+        'video_url' => 'Youtube Video Url',
+        'new_course' => 'New Lesson',
+        'sources' => 'File (Word, Excel , PDF , PowerPoint , Images)',
+        
+        
 
 
+        
+         
+        
 
         // for student affairs
 ];

@@ -21,10 +21,5 @@ class SettingTableSeeder extends Seeder
             'logo' => 'logo.png',
         ]);
 
-        DB::table('academicyears')->insert([
-            'year' => '2020-2021',
-            'active' => 1,
-            'order' => 1,
-        ]);
     }
 }

@@ -1,5 +1,8 @@
 <?php
 
+use App\StudentAffairs\Level;
+use App\DataTables\MaterialDataTable;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +18,10 @@ Route::any('/sys-login', function () {
     return view('studentAffairs.auth.login-page');
 });
 
+
+
 Route::any('/logins', 'AdminController@login');
+
 Route::any('/forget-pass', 'AdminController@forget_pass');
 Route::any('/forget', function(){
     return view('studentAffairs.auth.forgot-pass');
@@ -34,10 +40,10 @@ Route::get('lang/{lang}', function ($lang) {
 
 //, 'AutoCheckPermission'
 // all routes for our system.
-Route::resource('admins', 'AdminController');
 
-Route::group(['middleware' => 'auth:admin'], function () {
-
+Route::group(['middleware' => ['auth:admin']], function () {
+    
+    Route::resource('admins', 'AdminController');
     // welcome page 
     // Route::get('/', function () {
     //     return view('index');
@@ -47,10 +53,25 @@ Route::group(['middleware' => 'auth:admin'], function () {
         return view('index');
     });
     
+    Route::resource('course', 'CourseController');
     
     Route::resource('stage', 'StageController');
     Route::resource('level', 'LevelController');
     Route::resource('class', 'ClassController');
+
+    
+    Route::get('/select-course', function(){
+        return view('studentAffairs.course.material.select_course');
+    });
+    Route::resource('material', 'MaterialController');
+    Route::post('materials', 'MaterialController@index');
+
+    Route::get('/get-material', 'CourseController@materials');
+    Route::any('destroyfile', 'CourseController@destroyFile');
+
+    Route::get('new-material', 'CourseController@viewFile');
+    Route::post('upload', 'CourseController@uploadFile');
+
 
     Route::resource('setting', 'SettingController');
     Route::resource('academicyear', 'AcademicYearController');
@@ -58,15 +79,30 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::resource('place', 'PlaceController');
     Route::resource('nationality', 'NationalityController');
 
-    Route::resource('student', 'StudentController');
-
     Route::resource('permission', 'PermissionController');
-
-    Route::resource('parent', 'parenttController');
-
-
 });
 
+
+// routes for student
+Route::get('/std-login', function () {
+    return view('studentAffairs.auth.login-std');
+});
+
+Route::any('/login-std', 'StudentsController@login');
+
+
+Route::group(['middleware' => ['auth:std']], function () {
+
+    Route::post('/std-logout', function () {
+        auth()->guard('std')->logout();
+        return redirect(url('/std-login'));
+    });
+
+    Route::any('/std-courses', 'StudentsController@courses');
+    Route::any('/videos/{id}', 'StudentsController@videos');
+    Route::any('/files/{id}', 'StudentsController@files');
+
+});
 
 
 

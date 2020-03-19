@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\StudentAffairs\Classs;
 use App\DataTables\ClassDataTable;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+
+
+
 
 class ClassController extends Controller 
 {
@@ -22,11 +27,11 @@ class ClassController extends Controller
     }
 
     $record = Classs::with('level')->get();
-    return $dataTable->render('studentAffairs\class\all', compact('record'));
+    return $dataTable->render('studentAffairs.class.all', compact('record'));
 
 
       // $records = Classs::paginate(10);
-      // return view('studentAffairs\class\all', compact('records'));
+      // return view('studentAffairs.class.all', compact('records'));
   }
 
   /**
@@ -37,7 +42,7 @@ class ClassController extends Controller
   public function create()
   {
       $record = new Classs();
-    return view('studentAffairs\class\create&edit_class', compact('record'));
+    return view('studentAffairs.class.create&edit_class', compact('record'));
   }
 
   /**
@@ -59,6 +64,7 @@ class ClassController extends Controller
     $request->merge(['name_ar' => $request->input('name_en')]);
   }
 
+    $request->merge(['password' => Hash::make($request->input('password'))]);
     $record = Classs::create($request->all());
 
     return redirect(route('class.index'))->with('success', __('lang.inserted'));
@@ -73,7 +79,7 @@ class ClassController extends Controller
   public function edit($id)
   {
     $record = Classs::find($id);
-    return view('studentAffairs\class\create&edit_class', compact('record'));
+    return view('studentAffairs.class.create&edit_class', compact('record'));
   }
 
   /**
@@ -94,6 +100,12 @@ class ClassController extends Controller
       $request->merge(['name_en' => $request->input('name_ar')]);
     }elseif(!$request->has('name_ar') && $request->has('name_en')){
       $request->merge(['name_ar' => $request->input('name_en')]);
+    }
+
+    
+    if($request->has('password') && $request->password != null)
+    {
+      $request->merge(['password' => Hash::make($request->input('password'))]);
     }
 
     $record = Classs::find($id);

@@ -31,10 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         // // share setting data table
         $setting = Setting::first();
-        if($setting){ view()->share('setting', $setting); }
-        // // share academic active year
-        $activeYear= AcademicYear::where('active',1)->first();
-        if($activeYear){ view()->share('activeYear', $activeYear); }
+        view()->share('setting', $setting ? $setting : new Setting);
         // // share academic active year
         $supersetting= SuperAdmin::first();
         if($supersetting){ view()->share('supersetting', $supersetting);
